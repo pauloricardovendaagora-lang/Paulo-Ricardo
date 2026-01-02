@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import { ShieldCheck, ArrowRight, Zap, Target, Lock } from 'lucide-react';
 
-const HACK_SOUND_FINAL = 'https://assets.mixkit.co/active_storage/sfx/2556/2556-preview.mp3';
+const HACK_SOUND_CLICK = 'https://assets.mixkit.co/active_storage/sfx/2556/2556-preview.mp3';
 
 interface OfferScreenProps {
   onComplete: () => void;
@@ -12,8 +12,9 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Inicializa o som de hakeamento final
-    audioRef.current = new Audio(HACK_SOUND_FINAL);
+    // Inicializa o som para o clique (não toca automaticamente)
+    audioRef.current = new Audio(HACK_SOUND_CLICK);
+    audioRef.current.load();
   }, []);
 
   const handleFinalClick = () => {
@@ -22,20 +23,25 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
       audioRef.current.play().catch(e => console.log("Áudio bloqueado", e));
     }
     
-    // Pequeno delay para o som ser ouvido antes da navegação
+    // Vibração tátil para reforçar o clique
+    if ('vibrate' in navigator) {
+      navigator.vibrate(50);
+    }
+
+    // Pequeno delay para o som ser processado antes da transição
     setTimeout(() => {
       onComplete();
-    }, 800);
+    }, 600);
   };
 
   return (
     <div className="min-h-screen bg-black text-white p-6 flex flex-col justify-between pt-16 relative overflow-hidden">
-      {/* Elementos decorativos de fundo */}
+      {/* Elementos decorativos de fundo - sem som */}
       <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-green-500/10 to-transparent pointer-events-none" />
       
       <div className="space-y-8 animate-slide-up relative z-10">
         <div className="flex justify-center">
-          <div className="bg-green-500/10 p-4 rounded-full border border-green-500/50 shadow-[0_0_30px_rgba(34,197,94,0.2)] animate-pulse">
+          <div className="bg-green-500/10 p-4 rounded-full border border-green-500/50 shadow-[0_0_30px_rgba(34,197,94,0.2)]">
             <ShieldCheck className="w-16 h-16 text-green-500" />
           </div>
         </div>

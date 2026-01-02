@@ -96,9 +96,10 @@ const NotificationScreen: React.FC<NotificationScreenProps> = ({ onAccept }) => 
         </h2>
       </div>
 
-      {/* Banner de Notificação WhatsApp */}
+      {/* Banner de Notificação WhatsApp - Agora clicável */}
       <div 
-        className={`w-full max-w-[380px] bg-white/10 backdrop-blur-3xl rounded-[28px] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 transition-all duration-700 transform z-20 active:scale-95 ${
+        onClick={handleInteraction}
+        className={`w-full max-w-[380px] bg-white/10 backdrop-blur-3xl rounded-[28px] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 transition-all duration-700 transform z-20 active:scale-95 cursor-pointer ${
           visible ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0'
         }`}
       >

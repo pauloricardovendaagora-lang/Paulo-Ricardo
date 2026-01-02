@@ -92,30 +92,28 @@ const HackingLogin: React.FC<HackingLoginProps> = ({ onComplete }) => {
   const handleStartInvasion = () => {
     if (isRedirecting) return;
     
-    // Se ainda não copiou, o botão primeiro copia e depois já inicia o processo de saída
     if (!copied) {
       handleCopy();
     }
 
-    console.log("Comando recebido: Iniciando TikTok Bypass...");
     setIsRedirecting(true);
     playSound(audioAccessRef);
     
     if ('vibrate' in navigator) navigator.vibrate([50, 30, 50]);
 
-    // Delay mínimo apenas para o feedback visual do clique
+    // Redirecionamento imediato para evitar sensação de "travado"
     setTimeout(() => {
       onComplete();
-    }, 400);
+    }, 350);
   };
 
   return (
     <div className="h-screen bg-black text-[#00ff41] font-mono flex flex-col relative overflow-hidden">
-      {/* Camada de Scanlines (Z-index baixo para não cobrir botões) */}
-      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] z-10 bg-[length:100%_4px] opacity-20" />
+      {/* Camada de Scanlines (Z-index muito baixo) */}
+      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] z-0 bg-[length:100%_4px] opacity-10" />
       
-      {/* Barra de Status Hacker */}
-      <div className="w-full flex justify-between items-center px-6 pt-3 absolute top-0 z-[60] text-[12px] opacity-80 pointer-events-none">
+      {/* Barra de Status (Z-index alto mas sem bloquear cliques) */}
+      <div className="w-full flex justify-between items-center px-6 pt-3 absolute top-0 z-[100] text-[12px] opacity-80 pointer-events-none">
         <span className="font-bold">{currentTime}</span>
         <div className="flex items-center gap-2">
           <Signal size={14} />
@@ -127,8 +125,8 @@ const HackingLogin: React.FC<HackingLoginProps> = ({ onComplete }) => {
         </div>
       </div>
 
-      {/* Terminal Logs */}
-      <div className="mt-16 px-6 space-y-1 text-[10px] md:text-xs opacity-60 pointer-events-none z-20">
+      {/* Terminal Logs (Z-index médio) */}
+      <div className="mt-16 px-6 space-y-1 text-[10px] md:text-xs opacity-40 pointer-events-none z-10">
         {logs.map((log, i) => (
           <div key={i} className="animate-slide-up flex gap-2">
             <span className="text-white/30">[{new Date().getSeconds()}s]</span>
@@ -137,9 +135,9 @@ const HackingLogin: React.FC<HackingLoginProps> = ({ onComplete }) => {
         ))}
       </div>
 
-      {/* Painel de Login (Z-index ALTO para garantir clique) */}
-      <div className={`flex-1 flex flex-col items-center justify-center p-8 transition-all duration-700 transform z-50 ${showLogin ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-        <div className="w-full max-w-[380px] bg-zinc-900/95 border border-[#00ff41]/30 rounded-[32px] p-8 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,255,65,0.2)]">
+      {/* Painel de Acesso (Z-INDEX MÁXIMO PARA GARANTIR O CLIQUE) */}
+      <div className={`flex-1 flex flex-col items-center justify-center p-8 transition-all duration-700 transform z-[200] ${showLogin ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <div className="w-full max-w-[380px] bg-zinc-900 border border-[#00ff41]/30 rounded-[32px] p-8 shadow-[0_0_80px_rgba(0,255,65,0.2)]">
           
           <div className="flex flex-col items-center mb-8 pointer-events-none">
             <div className="w-16 h-16 bg-[#00ff41]/10 rounded-full flex items-center justify-center mb-4 border border-[#00ff41]/20 animate-pulse">
@@ -149,7 +147,7 @@ const HackingLogin: React.FC<HackingLoginProps> = ({ onComplete }) => {
             <p className="text-[#00ff41] text-[10px] tracking-widest uppercase mt-1">Siga os passos abaixo:</p>
           </div>
 
-          <div className="space-y-6 relative">
+          <div className="space-y-6">
             {/* Passo 1: Copiar */}
             <div className="space-y-2">
               <div className="flex justify-between items-center pointer-events-none px-1">
@@ -157,9 +155,9 @@ const HackingLogin: React.FC<HackingLoginProps> = ({ onComplete }) => {
                 {copied && <span className="text-[10px] text-[#00ff41] font-bold animate-pulse">PRONTO!</span>}
               </div>
               <button 
-                onClick={handleCopy}
+                onClick={(e) => { e.preventDefault(); handleCopy(); }}
                 type="button"
-                className={`w-full bg-black/60 border rounded-2xl p-4 flex items-center justify-between cursor-pointer transition-all duration-300 active:scale-95 shadow-inner ${copied ? 'border-[#00ff41]/60 bg-[#00ff41]/5' : 'border-[#00ff41]/30 hover:border-[#00ff41]'}`}
+                className={`w-full bg-black border rounded-2xl p-4 flex items-center justify-between cursor-pointer transition-all duration-300 active:scale-95 shadow-inner relative z-[210] ${copied ? 'border-[#00ff41]/60 bg-[#00ff41]/5' : 'border-[#00ff41]/30 hover:border-[#00ff41]'}`}
               >
                 <span className={`font-bold tracking-widest text-lg ${copied ? 'text-white' : 'text-[#00ff41]'}`}>{SECRET_KEY}</span>
                 <div className={`p-2 rounded-lg transition-all ${copied ? 'text-[#00ff41]' : 'text-[#00ff41]/40 bg-white/5'}`}>
@@ -171,9 +169,9 @@ const HackingLogin: React.FC<HackingLoginProps> = ({ onComplete }) => {
             {/* Passo 2: Avançar */}
             <div className="pt-2">
               <button
-                onClick={handleStartInvasion}
+                onClick={(e) => { e.preventDefault(); handleStartInvasion(); }}
                 type="button"
-                className={`w-full py-6 rounded-2xl transition-all flex items-center justify-center gap-3 uppercase tracking-tighter shadow-xl relative overflow-hidden active:scale-95 cursor-pointer pointer-events-auto ${
+                className={`w-full py-6 rounded-2xl transition-all flex items-center justify-center gap-3 uppercase tracking-tighter shadow-xl relative overflow-hidden active:scale-95 cursor-pointer z-[220] ${
                   isRedirecting 
                   ? 'bg-zinc-800 text-zinc-500' 
                   : copied 
@@ -204,11 +202,6 @@ const HackingLogin: React.FC<HackingLoginProps> = ({ onComplete }) => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Logo de Fundo (Apenas Decorativo) */}
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center opacity-5 pointer-events-none z-0">
-        <Terminal size={140} />
       </div>
 
       <style>{`

@@ -1,13 +1,20 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ShieldCheck, Lock, CreditCard, ChevronRight, Check, Star, Users, Clock, ArrowRight } from 'lucide-react';
+
+const CLICK_SOUND = 'https://assets.mixkit.co/active_storage/sfx/2556/2556-preview.mp3';
 
 const CheckoutScreen: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState(900); // 15 minutos em segundos
   const [activeUsers, setActiveUsers] = useState(142);
   const [isProcessing, setIsProcessing] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    // Som apenas para interação
+    audioRef.current = new Audio(CLICK_SOUND);
+    audioRef.current.load();
+
     const timer = setInterval(() => {
       setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
     }, 1000);
@@ -29,11 +36,23 @@ const CheckoutScreen: React.FC = () => {
   };
 
   const handlePayment = () => {
+    if (isProcessing) return;
+
+    // Tocar som de confirmação no clique
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(e => console.log("Áudio bloqueado", e));
+    }
+
+    if ('vibrate' in navigator) {
+      navigator.vibrate(50);
+    }
+
     setIsProcessing(true);
     setTimeout(() => {
       // Link atualizado para o Checkout da Cakto
       window.location.href = 'https://pay.cakto.com.br/32ispaq_706676';
-    }, 1500);
+    }, 1200);
   };
 
   return (

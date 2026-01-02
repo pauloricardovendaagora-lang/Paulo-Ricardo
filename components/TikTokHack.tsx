@@ -5,7 +5,6 @@ import { Heart, MessageCircle, Share2, Music, User, Plus, Search, Home, PlusSqua
 const HACKED_VIDEO_URL = 'https://res.cloudinary.com/dwhekgupo/video/upload/v1767314238/copy_84BC7A6C-989A-47D5-8C8F-86536831B5E9_lp9zcu.mp4';
 const GLITCH_SOUND_URL = 'https://assets.mixkit.co/active_storage/sfx/2443/2443-preview.mp3';
 const UNLOCK_SOUND_URL = 'https://assets.mixkit.co/active_storage/sfx/2556/2556-preview.mp3';
-// Link de imagem de perfil atualizado
 const PROFILE_IMAGE_URL = 'https://res.cloudinary.com/dwhekgupo/image/upload/v1767325801/avatar_haker_ads_p3zmug.jpg';
 
 interface TikTokHackProps {
@@ -19,7 +18,7 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
   const [copied, setCopied] = useState(false);
   const [passwordValue, setPasswordValue] = useState("");
   const [isUnlocking, setIsUnlocking] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(false); // Inicia desmutado
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
   const [duration, setDuration] = useState(0);
@@ -37,12 +36,10 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
     audioUnlockRef.current = new Audio(UNLOCK_SOUND_URL);
     if (audioGlitchRef.current) audioGlitchRef.current.volume = 0.4;
     
-    // Atualiza relógio do celular
     const clockTimer = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     }, 1000);
 
-    // Gerador de logs de hakeamento
     const logPool = [
       "SEARCHING_TARGET...", "ENCRYPTING_NODE_X21", "BYPASSING_TIKTOK_AUTH...", 
       "STREAMING_PIPELINE_INIT", "INJECTING_PAYLOAD", "SIGNAL_DEGRADATION_DETECTED",
@@ -63,12 +60,25 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
   const playGlitchSound = () => {
     if (audioGlitchRef.current) {
       audioGlitchRef.current.currentTime = 0;
-      audioGlitchRef.current.play().catch(e => console.log("Audio blocked", e));
+      audioGlitchRef.current.play().catch(e => console.log("Audio glitch bloqueado", e));
     }
   };
 
   useEffect(() => {
     if (!isLocked) {
+      // Quando desbloqueia, força a reprodução com som
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+        videoRef.current.play().catch(e => {
+          console.warn("Autoplay com som falhou, tentando mudo como fallback", e);
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current.play();
+            setIsMuted(true);
+          }
+        });
+      }
+
       const glitchLoop = () => {
         const timeout = Math.random() * 2000 + 800;
         setTimeout(() => {
@@ -86,23 +96,15 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
       };
       
       glitchLoop();
-      
-      if (videoRef.current) {
-        videoRef.current.muted = false;
-        videoRef.current.play().catch(e => {
-          if (videoRef.current) {
-            videoRef.current.muted = true;
-            videoRef.current.play();
-          }
-        });
-      }
     }
   }, [isLocked]);
 
   const handleCopy = (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      navigator.clipboard.writeText(SECRET_KEY);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(SECRET_KEY);
+      }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -114,16 +116,25 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
   const handleUnlock = () => {
     if (passwordValue !== SECRET_KEY) return;
     setIsUnlocking(true);
-    if (audioUnlockRef.current) audioUnlockRef.current.play();
     
+    // Tocar o som de desbloqueio IMEDIATAMENTE no clique para "acordar" o contexto de áudio do navegador
+    if (audioUnlockRef.current) {
+      audioUnlockRef.current.play().catch(e => console.log("Erro ao tocar som de desbloqueio", e));
+    }
+    
+    // Vibração tátil
+    if ('vibrate' in navigator) navigator.vibrate([50, 30, 50]);
+
     setTimeout(() => {
       setIsLocked(false);
       setIsUnlocking(false);
-    }, 2000);
+      setIsMuted(false); // Garante que o estado visual do ícone de som esteja como "ligado"
+    }, 1500);
   };
 
   const handlePaste = () => {
     setPasswordValue(SECRET_KEY);
+    if ('vibrate' in navigator) navigator.vibrate(20);
   };
 
   const handleTimeUpdate = () => {
