@@ -117,24 +117,27 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
           
           {/* Efeitos de Interferência Visível em todo o Vídeo */}
           <div className="absolute inset-0 pointer-events-none z-10">
-            {/* Ruído/Estática Digital */}
-            <div className="absolute inset-0 bg-[url('https://media.giphy.com/media/oEI9uWUoW9kf6/giphy.gif')] opacity-[0.08] mix-blend-screen animate-flicker" />
+            {/* Ruído/Estática Digital Constante */}
+            <div className="absolute inset-0 bg-[url('https://media.giphy.com/media/oEI9uWUoW9kf6/giphy.gif')] opacity-[0.12] mix-blend-screen animate-flicker" />
             
-            {/* Scanlines em movimento */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.2)_50%)] bg-[length:100%_4px] opacity-25 animate-scanline" />
+            {/* Scanlines em movimento acelerado */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.3)_50%)] bg-[length:100%_4px] opacity-30 animate-scanline" />
             
-            {/* Flash de instabilidade cromática */}
-            <div className="absolute inset-0 bg-red-500/5 mix-blend-overlay animate-noise" />
+            {/* Flash de instabilidade cromática (vermelho/verde) */}
+            <div className="absolute inset-0 bg-red-500/10 mix-blend-overlay animate-noise" />
             
-            {/* Vinheta escura para imersão */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
+            {/* Vinheta escura para profundidade */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60" />
           </div>
 
-          {/* Indicador de Sinal Crítico (Início ao Fim) */}
+          {/* Indicador de Sinal Crítico (Percorre do Início ao Fim) */}
           {!isVideoEnded && (
-            <div className="absolute top-28 left-4 flex items-center gap-2 bg-red-600/30 backdrop-blur-md border border-red-500/50 px-3 py-1.5 rounded-full animate-pulse z-30 shadow-[0_0_15px_rgba(239,68,68,0.4)]">
-              <Activity size={14} className="text-white" />
-              <span className="text-[10px] text-white font-black uppercase tracking-widest">SINAL INSTÁVEL</span>
+            <div className="absolute top-28 left-4 flex items-center gap-2 bg-red-600/40 backdrop-blur-xl border border-red-500/60 px-4 py-2 rounded-full animate-pulse z-30 shadow-[0_0_20px_rgba(239,68,68,0.5)]">
+              <Activity size={16} className="text-white animate-bounce" />
+              <div className="flex flex-col">
+                <span className="text-[10px] text-white font-black uppercase tracking-widest leading-none">Sinal Crítico</span>
+                <span className="text-[8px] text-white font-bold uppercase opacity-80 leading-tight">Interceptação Instável</span>
+              </div>
             </div>
           )}
         </div>
@@ -142,15 +145,15 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
 
       {/* Alerta Inicial de Hacking */}
       {showHackingText && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg animate-fade-in pointer-events-none">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl animate-fade-in pointer-events-none">
           <div className="text-center space-y-6 max-w-xs px-6">
             <ShieldAlert size={80} className="text-[#00ff41] mx-auto animate-pulse" />
             <div className="space-y-2">
-              <h3 className="font-mono text-[#00ff41] text-2xl font-black uppercase tracking-tighter italic animate-glitch">Interceptação Ativa</h3>
-              <p className="font-mono text-[#00ff41] text-[10px] leading-tight opacity-80 font-bold uppercase tracking-widest">
+              <h3 className="font-mono text-[#00ff41] text-2xl font-black uppercase tracking-tighter italic animate-glitch">Fluxo Interceptado</h3>
+              <p className="font-mono text-[#00ff41] text-[10px] leading-tight opacity-80 font-bold uppercase tracking-[0.2em]">
                 Decriptando feed de vídeo...<br/>
                 Sinal instável via Proxy...<br/>
-                <span className="text-white">CONEXÃO ESTABELECIDA</span>
+                <span className="text-white animate-pulse">SINAL CLANDESTINO ATIVO</span>
               </p>
             </div>
           </div>
@@ -204,12 +207,12 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
       <div className="absolute left-4 bottom-28 z-30 max-w-[75%] space-y-3 text-left">
         <div className="flex items-center gap-2">
            <h4 className="font-bold text-white text-[17px] drop-shadow-xl">@operador_invisivel</h4>
-           <div className="bg-red-600 px-2 py-0.5 rounded animate-pulse">
-              <span className="text-[8px] text-white font-black uppercase tracking-tighter">Hacker Live</span>
+           <div className="bg-red-600 px-2 py-0.5 rounded animate-pulse border border-red-400">
+              <span className="text-[8px] text-white font-black uppercase tracking-tighter">Sinal Hacker</span>
            </div>
         </div>
         <p className="text-[15px] text-white leading-tight drop-shadow-xl font-medium italic animate-flicker">
-          A PROVA ESTÁ AQUI. ELES NÃO PODEM APAGAR O QUE JÁ FOI VISTO. 🔓
+          A PROVA FINAL ESTÁ AQUI. ASSISTA ANTES QUE O SISTEMA DERRUBE. 🔓
         </p>
         <div className="flex items-center gap-2 pt-1">
           <Music size={14} className="text-white animate-pulse" />
@@ -225,7 +228,7 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
       <div className="absolute top-24 right-4 z-40">
         <button 
           onClick={toggleMute}
-          className="p-3 bg-black/50 backdrop-blur-xl rounded-full border border-white/20 shadow-2xl active:scale-90 transition-transform"
+          className="p-3 bg-black/60 backdrop-blur-2xl rounded-full border border-white/20 shadow-2xl active:scale-90 transition-transform"
         >
           {isMuted ? <VolumeX className="text-red-500" size={22} /> : <Volume2 className="text-[#00ff41]" size={22} />}
         </button>
@@ -236,7 +239,7 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
         <div className="h-full bg-[#00ff41] transition-all duration-300 shadow-[0_0_20px_#00ff41]" style={{ width: `${videoProgress}%` }} />
       </div>
 
-      {/* Barra de Abas Inferior (Invertida/Correção) */}
+      {/* Barra de Abas Inferior */}
       <div className="absolute bottom-0 left-0 right-0 h-20 bg-black border-t border-white/10 flex items-center justify-around px-2 pb-6 z-40">
         <div className="flex flex-col items-center text-white"><Home size={26} /><span className="text-[10px] mt-1 font-bold">Início</span></div>
         <div className="flex flex-col items-center text-white/40"><Search size={26} /><span className="text-[10px] mt-1 font-bold">Amigos</span></div>
@@ -253,37 +256,37 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
 
       {/* Overlay Final (Sinal Caído) */}
       {isVideoEnded && (
-        <div className="absolute inset-0 z-[100] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center p-8 animate-fade-in">
-          <div className="absolute inset-0 bg-[url('https://media.giphy.com/media/oEI9uWUoW9kf6/giphy.gif')] opacity-20 mix-blend-screen pointer-events-none" />
+        <div className="absolute inset-0 z-[100] bg-black/98 backdrop-blur-3xl flex flex-col items-center justify-center p-8 animate-fade-in">
+          <div className="absolute inset-0 bg-[url('https://media.giphy.com/media/oEI9uWUoW9kf6/giphy.gif')] opacity-25 mix-blend-screen pointer-events-none" />
           
           <div className="w-full max-w-sm flex flex-col gap-10 relative z-10 text-center">
             <div className="space-y-6">
               <div className="flex justify-center">
-                <div className="bg-red-600 p-6 rounded-full shadow-[0_0_60px_rgba(220,38,38,0.8)] animate-pulse">
+                <div className="bg-red-600 p-6 rounded-full shadow-[0_0_60px_rgba(220,38,38,0.9)] animate-pulse">
                   <AlertCircle className="w-14 h-14 text-white" />
                 </div>
               </div>
               <div className="space-y-4">
                 <div className="inline-block bg-white text-black px-4 py-1.5 rounded text-[11px] font-black uppercase tracking-widest shadow-xl">
-                   SINAL INTERROMPIDO PELO HOST
+                   SINAL PERDIDO - ERRO 403
                 </div>
-                <h2 className="text-white text-4xl font-black italic uppercase leading-tight tracking-tighter glitch-text">Conexão Perdida</h2>
+                <h2 className="text-white text-4xl font-black italic uppercase leading-tight tracking-tighter glitch-text">Conexão Derrubada</h2>
                 <p className="text-zinc-400 text-base leading-relaxed px-4 font-medium italic">
-                  Eles derrubaram o sinal. O sistema detectou a invasão. Recupere o acesso total agora antes que o link expire para seu IP.
+                  O sistema detectou a invasão e derrubou o link. A prova foi entregue, mas o sinal para este IP vai expirar em instantes.
                 </p>
               </div>
             </div>
             
             <button 
               onClick={onComplete}
-              className="w-full bg-[#00ff41] text-black py-7 rounded-2xl font-black text-2xl flex items-center justify-center gap-3 shadow-[0_0_50px_rgba(0,255,65,0.7)] uppercase tracking-tighter active:scale-95 transition-all"
+              className="w-full bg-[#00ff41] text-black py-7 rounded-2xl font-black text-2xl flex items-center justify-center gap-3 shadow-[0_0_50px_rgba(0,255,65,0.7)] uppercase tracking-tighter active:scale-95 transition-all animate-bounce"
             >
               RECUPERAR ACESSO
               <ArrowRight size={28} />
             </button>
 
             <div className="flex flex-col items-center gap-3">
-               <p className="text-[11px] text-[#00ff41] text-center uppercase tracking-[0.3em] font-black animate-pulse">TOKEN DE ACESSO DISPONÍVEL</p>
+               <p className="text-[11px] text-[#00ff41] text-center uppercase tracking-[0.3em] font-black animate-pulse">SESSÃO FINALIZADA COM SUCESSO</p>
             </div>
           </div>
         </div>
@@ -291,33 +294,34 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
 
       <style>{`
         @keyframes glitch-container {
-          0%, 100% { transform: translate(0); }
-          5% { transform: translate(-2px, 1px); }
-          10% { transform: translate(2px, -1px); }
+          0%, 100% { transform: translate(0); filter: hue-rotate(0deg); }
+          5% { transform: translate(-3px, 2px); filter: hue-rotate(10deg); }
+          10% { transform: translate(3px, -2px); filter: hue-rotate(-10deg); }
         }
-        .animate-glitch-container { animation: glitch-container 3s infinite; }
+        .animate-glitch-container { animation: glitch-container 1.5s infinite; }
 
         @keyframes flicker {
-          0% { opacity: 0.05; }
-          10% { opacity: 0.15; }
-          20% { opacity: 0.08; }
-          100% { opacity: 0.06; }
+          0% { opacity: 0.08; }
+          5% { opacity: 0.18; }
+          10% { opacity: 0.05; }
+          15% { opacity: 0.14; }
+          100% { opacity: 0.10; }
         }
-        .animate-flicker { animation: flicker 0.12s infinite; }
+        .animate-flicker { animation: flicker 0.1s infinite; }
 
         @keyframes scanline {
           0% { transform: translateY(-100%); }
           100% { transform: translateY(100%); }
         }
-        .animate-scanline { animation: scanline 5s linear infinite; }
+        .animate-scanline { animation: scanline 4s linear infinite; }
 
         @keyframes noise {
           0%, 100% { transform: translate(0, 0); }
-          20% { transform: translate(-1%, 1%); }
-          40% { transform: translate(1%, -1%); }
-          60% { transform: translate(-1%, -1%); }
+          25% { transform: translate(-2%, 1%); }
+          50% { transform: translate(1%, -2%); }
+          75% { transform: translate(-1%, -1%); }
         }
-        .animate-noise { animation: noise 0.08s steps(1) infinite; }
+        .animate-noise { animation: noise 0.07s steps(1) infinite; }
 
         @keyframes marquee {
           0% { transform: translateX(0); }
