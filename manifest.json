@@ -1,0 +1,18 @@
+
+{
+  "name": "Operador Invisível",
+  "short_name": "Operador",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "description": "Sistema de Operação Invisível Gamificado",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dwhekgupo/image/upload/v1767325801/avatar_haker_ads_p3zmug.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

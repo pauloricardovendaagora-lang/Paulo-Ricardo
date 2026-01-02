@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Sistema Operador</title>
     
-    <!-- Configurações de App Nativo (Esconde a barra do navegador) -->
+    <!-- Configurações de App Nativo (Esconde a barra do navegador ao instalar) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Operador">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000000">
-    <meta name="msapplication-TileColor" content="#000000">
+    
+    <!-- Manifest para PWA -->
+    <link rel="manifest" href="/manifest.json">
 
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -32,7 +34,6 @@
         overflow: hidden;
         height: 100vh;
         width: 100vw;
-        /* Impede o "puxar para atualizar" no mobile que mostra a URL */
         overscroll-behavior-y: contain;
       }
 
@@ -54,7 +55,6 @@
         text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9;
       }
       
-      /* Ajuste para Notch de iPhones novos */
       .safe-top {
         padding-top: env(safe-area-inset-top);
       }
