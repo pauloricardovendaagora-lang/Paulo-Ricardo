@@ -103,7 +103,7 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
 
   return (
     <div className="h-[100dvh] bg-black flex flex-col relative overflow-hidden select-none">
-      {/* Camada do Vídeo com Glitch Contínuo */}
+      {/* Camada do Vídeo com Efeito de Glitch/Instabilidade Contínua */}
       <div className="absolute inset-0 z-0 bg-black overflow-hidden">
         <div className="relative w-full h-full animate-glitch-container">
           <video
@@ -115,38 +115,41 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
             onEnded={() => setIsVideoEnded(true)}
           />
           
-          {/* Efeitos de Interferência Persistentes */}
+          {/* Efeitos de Interferência Visível em todo o Vídeo */}
           <div className="absolute inset-0 pointer-events-none z-10">
-            {/* Ruído digital */}
-            <div className="absolute inset-0 bg-[url('https://media.giphy.com/media/oEI9uWUoW9kf6/giphy.gif')] opacity-[0.05] mix-blend-screen animate-flicker" />
-            {/* Linhas de scan */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.2)_50%)] bg-[length:100%_4px] opacity-20 pointer-events-none" />
-            {/* Vinheta Hacker */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
-            {/* Flash de instabilidade */}
-            <div className="absolute inset-0 bg-[#00ff41]/5 opacity-10 animate-noise pointer-events-none" />
+            {/* Ruído/Estática Digital */}
+            <div className="absolute inset-0 bg-[url('https://media.giphy.com/media/oEI9uWUoW9kf6/giphy.gif')] opacity-[0.08] mix-blend-screen animate-flicker" />
+            
+            {/* Scanlines em movimento */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.2)_50%)] bg-[length:100%_4px] opacity-25 animate-scanline" />
+            
+            {/* Flash de instabilidade cromática */}
+            <div className="absolute inset-0 bg-red-500/5 mix-blend-overlay animate-noise" />
+            
+            {/* Vinheta escura para imersão */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
           </div>
 
-          {/* Badge de Sinal Instável */}
+          {/* Indicador de Sinal Crítico (Início ao Fim) */}
           {!isVideoEnded && (
-            <div className="absolute top-28 left-4 flex items-center gap-2 bg-red-600/30 backdrop-blur-md border border-red-500/50 px-3 py-1.5 rounded-full animate-pulse z-30">
-              <Activity size={14} className="text-red-500" />
-              <span className="text-[10px] text-red-500 font-black uppercase tracking-widest">Sinal Instável: 12%</span>
+            <div className="absolute top-28 left-4 flex items-center gap-2 bg-red-600/30 backdrop-blur-md border border-red-500/50 px-3 py-1.5 rounded-full animate-pulse z-30 shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+              <Activity size={14} className="text-white" />
+              <span className="text-[10px] text-white font-black uppercase tracking-widest">SINAL INSTÁVEL</span>
             </div>
           )}
         </div>
       </div>
 
-      {/* Alerta de Injeção de Código */}
+      {/* Alerta Inicial de Hacking */}
       {showHackingText && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg animate-fade-in pointer-events-none">
           <div className="text-center space-y-6 max-w-xs px-6">
             <ShieldAlert size={80} className="text-[#00ff41] mx-auto animate-pulse" />
             <div className="space-y-2">
-              <h3 className="font-mono text-[#00ff41] text-2xl font-black uppercase tracking-tighter italic animate-glitch">Transmissão Clandestina</h3>
+              <h3 className="font-mono text-[#00ff41] text-2xl font-black uppercase tracking-tighter italic animate-glitch">Interceptação Ativa</h3>
               <p className="font-mono text-[#00ff41] text-[10px] leading-tight opacity-80 font-bold uppercase tracking-widest">
-                Interceptando feed original...<br/>
-                Injetando metadados...<br/>
+                Decriptando feed de vídeo...<br/>
+                Sinal instável via Proxy...<br/>
                 <span className="text-white">CONEXÃO ESTABELECIDA</span>
               </p>
             </div>
@@ -154,7 +157,7 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
         </div>
       )}
 
-      {/* Cabeçalho Superior TikTok */}
+      {/* Cabeçalho TikTok */}
       <div className="absolute top-12 left-0 right-0 z-30 flex justify-center items-center gap-8">
         <span className="text-white/60 font-bold text-[16px] drop-shadow-lg">Seguindo</span>
         <div className="relative">
@@ -164,7 +167,7 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
         <Search className="absolute right-6 top-0 text-white drop-shadow-lg" size={24} />
       </div>
 
-      {/* Interações Laterais (DIREITA) */}
+      {/* Interações Laterais */}
       <div className="absolute right-3 bottom-36 z-30 flex flex-col items-center gap-6">
         <div className="relative mb-2">
           <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden shadow-2xl">
@@ -197,12 +200,12 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
         </div>
       </div>
 
-      {/* Informações Inferiores (ESQUERDA) */}
+      {/* Informações Inferiores */}
       <div className="absolute left-4 bottom-28 z-30 max-w-[75%] space-y-3 text-left">
         <div className="flex items-center gap-2">
            <h4 className="font-bold text-white text-[17px] drop-shadow-xl">@operador_invisivel</h4>
            <div className="bg-red-600 px-2 py-0.5 rounded animate-pulse">
-              <span className="text-[8px] text-white font-black uppercase tracking-tighter">Ao Vivo</span>
+              <span className="text-[8px] text-white font-black uppercase tracking-tighter">Hacker Live</span>
            </div>
         </div>
         <p className="text-[15px] text-white leading-tight drop-shadow-xl font-medium italic animate-flicker">
@@ -228,17 +231,17 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
         </button>
       </div>
 
-      {/* Barra de Progresso Hacker */}
+      {/* Barra de Progresso */}
       <div className="absolute bottom-[5rem] left-0 w-full h-0.5 bg-white/10 z-30">
         <div className="h-full bg-[#00ff41] transition-all duration-300 shadow-[0_0_20px_#00ff41]" style={{ width: `${videoProgress}%` }} />
       </div>
 
-      {/* Abas Inferiores Fixas */}
+      {/* Barra de Abas Inferior (Invertida/Correção) */}
       <div className="absolute bottom-0 left-0 right-0 h-20 bg-black border-t border-white/10 flex items-center justify-around px-2 pb-6 z-40">
         <div className="flex flex-col items-center text-white"><Home size={26} /><span className="text-[10px] mt-1 font-bold">Início</span></div>
         <div className="flex flex-col items-center text-white/40"><Search size={26} /><span className="text-[10px] mt-1 font-bold">Amigos</span></div>
         <div className="relative px-2">
-           <div className="bg-white rounded-lg h-9 w-12 flex items-center justify-center relative">
+           <div className="bg-white rounded-lg h-9 w-12 flex items-center justify-center relative shadow-lg">
               <div className="absolute -left-1.5 w-full h-full bg-[#69C9D0] rounded-lg -z-10" />
               <div className="absolute -right-1.5 w-full h-full bg-[#EE1D52] rounded-lg -z-10" />
               <PlusSquare size={24} className="text-black" />
@@ -248,10 +251,9 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
         <div className="flex flex-col items-center text-white/40"><User size={26} /><span className="text-[10px] mt-1 font-bold">Perfil</span></div>
       </div>
 
-      {/* Overlay de Encerramento (Sinal Perdido) */}
+      {/* Overlay Final (Sinal Caído) */}
       {isVideoEnded && (
-        <div className="absolute inset-0 z-[100] bg-black flex flex-col items-center justify-center p-8 animate-fade-in">
-          {/* Estática pesada de fundo */}
+        <div className="absolute inset-0 z-[100] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center p-8 animate-fade-in">
           <div className="absolute inset-0 bg-[url('https://media.giphy.com/media/oEI9uWUoW9kf6/giphy.gif')] opacity-20 mix-blend-screen pointer-events-none" />
           
           <div className="w-full max-w-sm flex flex-col gap-10 relative z-10 text-center">
@@ -263,25 +265,25 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
               </div>
               <div className="space-y-4">
                 <div className="inline-block bg-white text-black px-4 py-1.5 rounded text-[11px] font-black uppercase tracking-widest shadow-xl">
-                   CONEXÃO ENCERRADA PELO HOST
+                   SINAL INTERROMPIDO PELO HOST
                 </div>
-                <h2 className="text-white text-4xl font-black italic uppercase leading-tight tracking-tighter glitch-text">Sinal Expirou</h2>
+                <h2 className="text-white text-4xl font-black italic uppercase leading-tight tracking-tighter glitch-text">Conexão Perdida</h2>
                 <p className="text-zinc-400 text-base leading-relaxed px-4 font-medium italic">
-                  O sistema detectou o vazamento e derrubou o sinal. Você tem 60 segundos para garantir seu acesso antes que seu IP seja bloqueado.
+                  Eles derrubaram o sinal. O sistema detectou a invasão. Recupere o acesso total agora antes que o link expire para seu IP.
                 </p>
               </div>
             </div>
             
             <button 
               onClick={onComplete}
-              className="w-full bg-[#00ff41] text-black py-7 rounded-2xl font-black text-2xl flex items-center justify-center gap-3 shadow-[0_0_50px_rgba(0,255,65,0.7)] uppercase tracking-tighter active:scale-95 transition-all animate-jump"
+              className="w-full bg-[#00ff41] text-black py-7 rounded-2xl font-black text-2xl flex items-center justify-center gap-3 shadow-[0_0_50px_rgba(0,255,65,0.7)] uppercase tracking-tighter active:scale-95 transition-all"
             >
               RECUPERAR ACESSO
               <ArrowRight size={28} />
             </button>
 
             <div className="flex flex-col items-center gap-3">
-               <p className="text-[11px] text-[#00ff41] text-center uppercase tracking-[0.3em] font-black animate-pulse">SESSÃO FINALIZADA COM SUCESSO</p>
+               <p className="text-[11px] text-[#00ff41] text-center uppercase tracking-[0.3em] font-black animate-pulse">TOKEN DE ACESSO DISPONÍVEL</p>
             </div>
           </div>
         </div>
@@ -289,31 +291,33 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
 
       <style>{`
         @keyframes glitch-container {
-          0% { transform: translate(0); }
-          2% { transform: translate(-2px, 2px); }
-          4% { transform: translate(2px, -2px); }
-          6% { transform: translate(0); }
-          100% { transform: translate(0); }
+          0%, 100% { transform: translate(0); }
+          5% { transform: translate(-2px, 1px); }
+          10% { transform: translate(2px, -1px); }
         }
         .animate-glitch-container { animation: glitch-container 3s infinite; }
 
         @keyframes flicker {
           0% { opacity: 0.05; }
-          5% { opacity: 0.15; }
-          10% { opacity: 0.03; }
-          15% { opacity: 0.1; }
+          10% { opacity: 0.15; }
+          20% { opacity: 0.08; }
           100% { opacity: 0.06; }
         }
-        .animate-flicker { animation: flicker 0.1s infinite; }
+        .animate-flicker { animation: flicker 0.12s infinite; }
+
+        @keyframes scanline {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100%); }
+        }
+        .animate-scanline { animation: scanline 5s linear infinite; }
 
         @keyframes noise {
           0%, 100% { transform: translate(0, 0); }
-          10% { transform: translate(-1%, -1%); }
-          20% { transform: translate(1%, 1%); }
-          30% { transform: translate(-1%, 1%); }
+          20% { transform: translate(-1%, 1%); }
           40% { transform: translate(1%, -1%); }
+          60% { transform: translate(-1%, -1%); }
         }
-        .animate-noise { animation: noise 0.05s steps(1) infinite; }
+        .animate-noise { animation: noise 0.08s steps(1) infinite; }
 
         @keyframes marquee {
           0% { transform: translateX(0); }
@@ -321,10 +325,7 @@ const TikTokHack: React.FC<TikTokHackProps> = ({ onComplete }) => {
         }
         .animate-marquee { display: inline-block; animation: marquee 10s linear infinite; }
 
-        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .animate-spin-slow { animation: spin-slow 4s linear infinite; }
-
-        .glitch-text { text-shadow: 3px 0 #ff00c1, -3px 0 #00fff9; }
+        .glitch-text { text-shadow: 4px 0 #ff00c1, -4px 0 #00fff9; }
       `}</style>
     </div>
   );
