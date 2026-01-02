@@ -12,32 +12,87 @@ import CheckoutScreen from './components/CheckoutScreen';
 
 type FunnelStage = 'start' | 'notification' | 'whatsapp' | 'incoming-call' | 'call' | 'hacking-login' | 'tiktok' | 'offer' | 'checkout';
 
+// Função de rastreamento resiliente
+const trackFBEvent = (eventName: string, params?: object) => {
+  try {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', eventName, params);
+      console.log(`[FB Pixel] Evento disparado: ${eventName}`, params || '');
+    }
+  } catch (e) {
+    console.warn("Erro ao disparar evento FB:", e);
+  }
+};
+
+const trackFBCustomEvent = (eventName: string, params?: object) => {
+  try {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('trackCustom', eventName, params);
+      console.log(`[FB Pixel] Evento Customizado: ${eventName}`, params || '');
+    }
+  } catch (e) {
+    console.warn("Erro ao disparar evento custom FB:", e);
+  }
+};
+
 const App: React.FC = () => {
   const [stage, setStage] = useState<FunnelStage>('start');
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // URLs críticas para pré-carregamento
-  const BG_IMAGE_ETAPA_1 = "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop";
-  const NOTIFY_SOUND = 'https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3';
-
+  // Pré-carregamento de recursos essenciais
   useEffect(() => {
-    const img = new Image();
-    img.src = BG_IMAGE_ETAPA_1;
+    const NOTIFY_SOUND = 'https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3';
     const audio = new Audio();
     audio.src = NOTIFY_SOUND;
     audio.load();
+    console.log("App iniciado: Sistema pronto.");
   }, []);
+
+  // Monitoramento de Etapas para o Facebook Ads
+  useEffect(() => {
+    switch (stage) {
+      case 'start':
+        trackFBEvent('PageView');
+        break;
+      case 'notification':
+        trackFBCustomEvent('Funnel_Notification_Received');
+        break;
+      case 'whatsapp':
+        trackFBEvent('Lead', { content_name: 'Inicio_Chat_WhatsApp' });
+        break;
+      case 'incoming-call':
+        trackFBCustomEvent('Funnel_Incoming_Call');
+        break;
+      case 'call':
+        trackFBCustomEvent('Funnel_Call_Answered');
+        break;
+      case 'hacking-login':
+        trackFBCustomEvent('Funnel_Terminal_Login');
+        break;
+      case 'tiktok':
+        trackFBEvent('ViewContent', { content_category: 'Social_Proof_Video' });
+        break;
+      case 'offer':
+        trackFBCustomEvent('Funnel_Offer_View');
+        break;
+      case 'checkout':
+        trackFBEvent('InitiateCheckout', { value: 67.00, currency: 'BRL' });
+        break;
+    }
+  }, [stage]);
 
   const navigateTo = (nextStage: FunnelStage) => {
     setIsTransitioning(true);
+    // Timer curto para animação de fade
     setTimeout(() => {
       setStage(nextStage);
       setIsTransitioning(false);
-    }, 300);
+      window.scrollTo(0, 0);
+    }, 250);
   };
 
   return (
-    <div className={`min-h-screen bg-black transition-all duration-300 ease-in-out ${isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+    <div className={`min-h-screen bg-black transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
       <div className="mx-auto max-w-[430px] min-h-screen relative overflow-hidden shadow-2xl bg-black">
         {stage === 'start' && (
           <StartScreen onStart={() => navigateTo('notification')} />
@@ -46,10 +101,10 @@ const App: React.FC = () => {
           <NotificationScreen onAccept={() => navigateTo('whatsapp')} />
         )}
         {stage === 'whatsapp' && (
-          <WhatsAppChat onComplete={() => navigateTo('incoming-call')} onExit={() => navigateTo('start')} />
+          <WhatsAppChat onComplete={() => navigateTo('incoming-call')} onExit={() => setStage('start')} />
         )}
         {stage === 'incoming-call' && (
-          <IncomingCallScreen onAccept={() => navigateTo('call')} onDecline={() => navigateTo('start')} />
+          <IncomingCallScreen onAccept={() => navigateTo('call')} onDecline={() => setStage('start')} />
         )}
         {stage === 'call' && (
           <CallingScreen onComplete={() => navigateTo('hacking-login')} />

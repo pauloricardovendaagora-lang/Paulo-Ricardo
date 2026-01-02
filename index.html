@@ -6,6 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Operador Invisível</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Meta Pixel Code - Protegido contra erros -->
+    <script>
+      (function() {
+        try {
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          
+          // Substitua o ID abaixo pelo seu ID real no Gerenciador de Anúncios
+          fbq('init', 'SEU_PIXEL_ID_AQUI'); 
+          fbq('track', 'PageView');
+        } catch (e) {
+          console.warn("Facebook Pixel falhou ao carregar, mas o site continuará funcionando.");
+        }
+      })();
+    </script>
+    
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
       
@@ -33,20 +56,13 @@
       }
 
       .animate-slide-up {
-        animation: slideUp 0.2s ease-out forwards;
+        animation: slideUp 0.3s ease-out forwards;
       }
 
       @keyframes vibrate {
         0% { transform: translate(0); }
         10% { transform: translate(-2px, -2px); }
         20% { transform: translate(2px, -2px); }
-        30% { transform: translate(-2px, 2px); }
-        40% { transform: translate(2px, 2px); }
-        50% { transform: translate(-2px, -2px); }
-        60% { transform: translate(2px, -2px); }
-        70% { transform: translate(-2px, 2px); }
-        80% { transform: translate(2px, 2px); }
-        90% { transform: translate(-2px, -2px); }
         100% { transform: translate(0); }
       }
 
@@ -54,41 +70,34 @@
         animation: vibrate 0.5s linear infinite;
       }
 
-      @keyframes glitch {
-        0% { transform: translate(0); }
-        20% { transform: translate(-2px, 2px); }
-        40% { transform: translate(-2px, -2px); }
-        60% { transform: translate(2px, 2px); }
-        80% { transform: translate(2px, -2px); }
-        100% { transform: translate(0); }
-      }
-
       .glitch-text {
-        animation: glitch 0.5s infinite;
         text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9;
       }
 
       @keyframes jump {
-        0%, 100% { transform: translateY(0) scale(1); }
-        50% { transform: translateY(-10px) scale(1.02); }
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
       }
 
       .animate-jump {
-        animation: jump 0.8s ease-in-out infinite;
+        animation: jump 1s ease-in-out infinite;
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
-  }
-}
-</script>
-</head>
+    
+    <script type="importmap">
+    {
+      "imports": {
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3"
+      }
+    }
+    </script>
+  </head>
   <body>
     <div id="root"></div>
+    <!-- Ponto de entrada crucial para Vercel/Vite -->
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
