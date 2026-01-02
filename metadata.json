@@ -1,0 +1,8 @@
+{
+  "name": "Operador Invisível - Experiência Gamificada",
+  "description": "Uma experiência imersiva e gamificada através de simulações do WhatsApp, Ligações iOS e TikTok Hackeado.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
