@@ -71,7 +71,7 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
     let currentStep = 0;
     const addMessage = async () => {
       if (currentStep >= fullCopy.length) {
-        setShowChoices(true);
+        // Removido setShowChoices(true) daqui para aguardar o áudio terminar
         return;
       }
 
@@ -153,6 +153,8 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
       setPlayingAudioId(null);
       setAudioProgress(0);
       setAudioCurrentTime('0:00');
+      // Mostrar escolhas quando o áudio terminar
+      setShowChoices(true);
     };
 
     audio.onerror = () => {
@@ -327,8 +329,20 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
 
         {showChoices && (
           <div className="space-y-4 pt-10 pb-10 animate-slide-up">
-            <button onClick={onComplete} className="w-full bg-[#25D366] text-black py-5 rounded-2xl font-black text-xl shadow-[0_15px_35px_rgba(37,211,102,0.3)] animate-jump flex items-center justify-center gap-2">
-              ➡️ Continuar em silêncio
+            <button 
+              onClick={onComplete} 
+              className="w-full bg-[#25D366] text-black py-5 rounded-2xl font-black text-xl shadow-[0_15px_35px_rgba(37,211,102,0.3)] flex items-center justify-center gap-2 relative overflow-hidden group animate-pane-malfunction"
+            >
+              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              <div className="relative z-10 flex items-center gap-2">
+                ➡️ Continuar em silêncio
+              </div>
+              
+              {/* Efeitos Visuais de "Pane" */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity">
+                 <div className="absolute top-0 left-0 w-full h-px bg-red-500/50 animate-pane-line" />
+                 <div className="absolute bottom-0 left-0 w-full h-px bg-blue-500/50 animate-pane-line-reverse" />
+              </div>
             </button>
             <button onClick={onExit} className="w-full bg-white/5 text-red-500 py-4 rounded-xl font-bold border border-red-500/20 active:bg-red-500/10 transition-colors">
               ➡️ Sair agora
@@ -352,6 +366,38 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
 
       {/* Home Indicator iOS */}
       <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-20" />
+
+      <style>{`
+        @keyframes pane-malfunction {
+          0% { transform: translate(0, 0) scale(1); filter: hue-rotate(0deg); }
+          1% { transform: translate(-2px, 1px) scale(1.005); filter: hue-rotate(90deg); }
+          2% { transform: translate(2px, -1px) scale(0.995); }
+          3% { transform: translate(0, 0); filter: hue-rotate(0deg); }
+          50% { transform: translate(0, 0); }
+          51% { transform: translate(1px, 1px) skewX(2deg); opacity: 0.8; }
+          52% { transform: translate(-1px, -1px) skewX(-2deg); opacity: 1; }
+          53% { transform: translate(0, 0); }
+        }
+        .animate-pane-malfunction {
+          animation: pane-malfunction 3s infinite linear;
+        }
+
+        @keyframes pane-line {
+          0% { top: -10%; }
+          100% { top: 110%; }
+        }
+        .animate-pane-line {
+          animation: pane-line 0.8s infinite linear;
+        }
+
+        @keyframes pane-line-reverse {
+          0% { bottom: -10%; }
+          100% { bottom: 110%; }
+        }
+        .animate-pane-line-reverse {
+          animation: pane-line-reverse 1s infinite linear;
+        }
+      `}</style>
     </div>
   );
 };

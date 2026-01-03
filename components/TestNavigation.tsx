@@ -15,7 +15,9 @@ import {
   ShoppingCart,
   Activity,
   Zap,
-  Lock
+  Lock,
+  EyeOff,
+  ShoppingBag
 } from 'lucide-react';
 
 interface TestNavigationProps {
@@ -27,21 +29,20 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
     { id: 'start', label: '00', title: 'Sessão Inicial', sub: 'Handshake Protocol', icon: Play, color: 'text-green-500', bg: 'bg-green-500/10', goal: 'ENTRY' },
     { id: 'notification', label: '01', title: 'Interrupção', sub: 'Notificação iOS 17', icon: Bell, color: 'text-blue-400', bg: 'bg-blue-400/10', goal: 'ATTENTION' },
     { id: 'whatsapp', label: '02', title: 'Engajamento', sub: 'WhatsApp Direct', icon: MessageSquare, color: 'text-[#25D366]', bg: 'bg-[#25D366]/10', goal: 'LEAD' },
-    { id: 'incoming-call', label: '03', title: 'Escalada', sub: 'Incoming Voice Call', icon: PhoneIncoming, color: 'text-red-500', bg: 'bg-red-500/10', goal: 'INTERRUPT' },
-    { id: 'call', label: '04', title: 'Doutrinação', sub: 'Operador Calling', icon: Phone, color: 'text-purple-400', bg: 'bg-purple-400/10', goal: 'RETENTION' },
-    { id: 'hacking-login', label: '05', title: 'Credenciais', sub: 'Hacking Terminal', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
-    { id: 'tiktok', label: '06', title: 'Prova Social', sub: 'TikTok Inversion', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
-    { id: 'offer', label: '07', title: 'Revelação', sub: 'VSL / Sales Page', icon: LayoutDashboard, color: 'text-green-400', bg: 'bg-green-400/10', goal: 'PITCH' },
-    { id: 'checkout', label: '08', title: 'Conversão', sub: 'Final Checkout', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'MONEY' },
+    { id: 'invisible-system', label: '03', title: 'Revelação', sub: 'Invisible Narrative', icon: EyeOff, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'AWARENESS' },
+    { id: 'incoming-call', label: '04', title: 'Escalada', sub: 'Incoming Voice Call', icon: PhoneIncoming, color: 'text-red-500', bg: 'bg-red-500/10', goal: 'INTERRUPT' },
+    { id: 'call', label: '05', title: 'Doutrinação', sub: 'Operador Calling', icon: Phone, color: 'text-purple-400', bg: 'bg-purple-400/10', goal: 'RETENTION' },
+    { id: 'hacking-login', label: '06', title: 'Credenciais', sub: 'Hacking Terminal', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
+    { id: 'tiktok', label: '07', title: 'Prova Social', sub: 'TikTok Inversion', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
+    { id: 'offer', label: '08', title: 'Oferta', sub: 'Sales Deck', icon: ShoppingBag, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'DESIRE' },
+    { id: 'checkout', label: '09', title: 'Conversão', sub: 'Final Checkout', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'MONEY' },
   ];
 
   return (
     <div className="h-[100dvh] bg-black text-white font-mono relative flex flex-col overflow-hidden">
-      {/* Background Decor Fixo */}
       <div className="fixed inset-0 opacity-[0.05] pointer-events-none z-0" 
            style={{ backgroundImage: 'linear-gradient(#00ff41 1px, transparent 1px), linear-gradient(90deg, #00ff41 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
       
-      {/* Header Fixo */}
       <div className="p-6 pt-12 shrink-0 relative z-20 bg-black/80 backdrop-blur-md border-b border-[#00ff41]/20">
         <div className="flex flex-col items-center">
           <div className="bg-[#00ff41]/10 p-3 rounded-2xl border border-[#00ff41]/30 mb-3 shadow-[0_0_20px_rgba(0,255,65,0.2)]">
@@ -55,7 +56,6 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Grid de Navegação Rolável */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth px-6 py-6 relative z-10 custom-scrollbar">
         <div className="grid gap-3">
           {stages.map((stage) => (
@@ -64,7 +64,6 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
               onClick={() => onNavigate(stage.id)}
               className="w-full flex items-center justify-between bg-zinc-900/40 hover:bg-zinc-800/60 border border-white/5 p-4 rounded-2xl transition-all active:scale-[0.98] group relative overflow-hidden"
             >
-              {/* Goal Indicator */}
               <div className="absolute top-0 right-0 px-2 py-0.5 bg-zinc-800/80 rounded-bl-lg">
                 <span className="text-[7px] font-black tracking-widest text-zinc-500 group-hover:text-[#00ff41] transition-colors">{stage.goal}</span>
               </div>
@@ -87,7 +86,6 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
           ))}
         </div>
 
-        {/* System Diagnostics */}
         <div className="mt-8 p-5 rounded-3xl bg-zinc-900/20 border border-dashed border-[#00ff41]/20">
           <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
@@ -99,20 +97,15 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
           <div className="space-y-2">
               <div className="flex justify-between text-[9px] font-bold uppercase">
                   <span className="text-zinc-600">Funnel Integrity:</span>
-                  <span className="text-[#00ff41]">98.4%</span>
+                  <span className="text-[#00ff41]">100%</span>
               </div>
               <div className="flex justify-between text-[9px] font-bold uppercase">
                   <span className="text-zinc-600">Active Handlers:</span>
-                  <span className="text-white">Socket_v2.5</span>
-              </div>
-              <div className="flex justify-between text-[9px] font-bold uppercase">
-                  <span className="text-zinc-600">Simulation:</span>
-                  <span className="text-zinc-400">Production_Mirror</span>
+                  <span className="text-white">Socket_v2.5_PRO</span>
               </div>
           </div>
         </div>
 
-        {/* Footer Actions */}
         <div className="mt-6 flex gap-3">
             <button 
                 onClick={() => onNavigate('start')}
@@ -125,25 +118,15 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
                 <Zap size={14} className="text-[#00ff41] animate-pulse" />
             </div>
         </div>
-
-        {/* Safe Area Spacing */}
         <div className="h-10" />
       </div>
 
-      {/* Scanlines Effect Fixo */}
       <div className="fixed inset-0 pointer-events-none z-[100] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.05)_50%)] bg-[length:100%_4px] opacity-20" />
-      
-      {/* iOS Style Home Indicator */}
       <div className="fixed bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/20 rounded-full pointer-events-none z-[110]" />
 
       <style>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 0px;
-        }
-        .custom-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 0px; }
+        .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </div>
   );

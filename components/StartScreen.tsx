@@ -1,14 +1,26 @@
 
 import React from 'react';
-import { ShieldAlert, Zap } from 'lucide-react';
+import { ShieldAlert, Zap, Settings } from 'lucide-react';
 
 interface StartScreenProps {
   onStart: () => void;
+  onDebug?: () => void;
 }
 
-const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
+const StartScreen: React.FC<StartScreenProps> = ({ onStart, onDebug }) => {
   return (
     <div className="h-screen bg-black flex flex-col items-center justify-center p-8 text-center relative overflow-hidden font-mono">
+      {/* Botão de Debug/Edição */}
+      {onDebug && (
+        <button 
+          onClick={onDebug}
+          className="absolute top-12 right-6 z-50 p-3 text-white/20 hover:text-white/60 transition-colors active:scale-90"
+          title="Abrir Painel de Edição"
+        >
+          <Settings size={20} />
+        </button>
+      )}
+
       {/* Background Decor */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.2)_50%)] bg-[length:100%_4px]" />

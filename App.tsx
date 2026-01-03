@@ -3,14 +3,16 @@ import React, { useState, useEffect } from 'react';
 import StartScreen from './components/StartScreen';
 import NotificationScreen from './components/NotificationScreen';
 import WhatsAppChat from './components/WhatsAppChat';
+import InvisibleSystemReveal from './components/InvisibleSystemReveal';
 import IncomingCallScreen from './components/IncomingCallScreen';
 import CallingScreen from './components/CallingScreen';
 import HackingLogin from './components/HackingLogin';
 import TikTokHack from './components/TikTokHack';
 import OfferScreen from './components/OfferScreen';
 import CheckoutScreen from './components/CheckoutScreen';
+import TestNavigation from './components/TestNavigation';
 
-type FunnelStage = 'start' | 'notification' | 'whatsapp' | 'incoming-call' | 'call' | 'hacking-login' | 'tiktok' | 'offer' | 'checkout';
+type FunnelStage = 'start' | 'notification' | 'whatsapp' | 'invisible-system' | 'incoming-call' | 'call' | 'hacking-login' | 'tiktok' | 'offer' | 'checkout' | 'debug';
 
 const trackFBEvent = (eventName: string, params?: object) => {
   try {
@@ -37,6 +39,8 @@ const App: React.FC = () => {
     switch (stage) {
       case 'start': trackFBEvent('PageView'); break;
       case 'whatsapp': trackFBEvent('Lead', { content_name: 'Inicio_Chat_WhatsApp' }); break;
+      case 'invisible-system': trackFBEvent('ViewContent', { content_name: 'Narrativa_Sistema_Invisivel' }); break;
+      case 'offer': trackFBEvent('ViewContent', { content_category: 'Sales_Page' }); break;
       case 'tiktok': trackFBEvent('ViewContent', { content_category: 'Social_Proof_Video' }); break;
       case 'checkout': trackFBEvent('InitiateCheckout', { value: 67.00, currency: 'BRL' }); break;
     }
@@ -54,9 +58,11 @@ const App: React.FC = () => {
   return (
     <div className={`min-h-[100dvh] bg-black transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
       <div className="mx-auto max-w-[430px] min-h-[100dvh] relative bg-black shadow-2xl">
-        {stage === 'start' && <StartScreen onStart={() => navigateTo('notification')} />}
+        {stage === 'debug' && <TestNavigation onNavigate={(s) => navigateTo(s as FunnelStage)} />}
+        {stage === 'start' && <StartScreen onStart={() => navigateTo('notification')} onDebug={() => setStage('debug')} />}
         {stage === 'notification' && <NotificationScreen onAccept={() => navigateTo('whatsapp')} />}
-        {stage === 'whatsapp' && <WhatsAppChat onComplete={() => navigateTo('incoming-call')} onExit={() => setStage('start')} />}
+        {stage === 'whatsapp' && <WhatsAppChat onComplete={() => navigateTo('invisible-system')} onExit={() => setStage('start')} />}
+        {stage === 'invisible-system' && <InvisibleSystemReveal onComplete={() => navigateTo('incoming-call')} />}
         {stage === 'incoming-call' && <IncomingCallScreen onAccept={() => navigateTo('call')} onDecline={() => setStage('start')} />}
         {stage === 'call' && <CallingScreen onComplete={() => navigateTo('hacking-login')} />}
         {stage === 'hacking-login' && <HackingLogin onComplete={() => navigateTo('tiktok')} />}
