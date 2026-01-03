@@ -9,8 +9,9 @@ import HackingLogin from './components/HackingLogin';
 import TikTokHack from './components/TikTokHack';
 import OfferScreen from './components/OfferScreen';
 import CheckoutScreen from './components/CheckoutScreen';
+import TestNavigation from './components/TestNavigation';
 
-type FunnelStage = 'start' | 'notification' | 'whatsapp' | 'incoming-call' | 'call' | 'hacking-login' | 'tiktok' | 'offer' | 'checkout';
+type FunnelStage = 'start' | 'notification' | 'whatsapp' | 'incoming-call' | 'call' | 'hacking-login' | 'tiktok' | 'offer' | 'checkout' | 'test-nav';
 
 const trackFBEvent = (eventName: string, params?: object) => {
   try {
@@ -19,16 +20,6 @@ const trackFBEvent = (eventName: string, params?: object) => {
     }
   } catch (e) {
     console.warn("Erro ao disparar evento FB:", e);
-  }
-};
-
-const trackFBCustomEvent = (eventName: string, params?: object) => {
-  try {
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('trackCustom', eventName, params);
-    }
-  } catch (e) {
-    console.warn("Erro ao disparar evento custom FB:", e);
   }
 };
 
@@ -64,6 +55,12 @@ const App: React.FC = () => {
   return (
     <div className={`min-h-[100dvh] bg-black transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
       <div className="mx-auto max-w-[430px] min-h-[100dvh] relative bg-black shadow-2xl">
+        {/* Camada Global de Debug - Clique triplo no topo para abrir menu de teste */}
+        <div 
+          className="absolute top-0 left-0 w-full h-8 z-[999] opacity-0" 
+          onClick={(e) => e.detail === 3 && setStage('test-nav')} 
+        />
+
         {stage === 'start' && <StartScreen onStart={() => navigateTo('notification')} />}
         {stage === 'notification' && <NotificationScreen onAccept={() => navigateTo('whatsapp')} />}
         {stage === 'whatsapp' && <WhatsAppChat onComplete={() => navigateTo('incoming-call')} onExit={() => setStage('start')} />}
@@ -73,6 +70,7 @@ const App: React.FC = () => {
         {stage === 'tiktok' && <TikTokHack onComplete={() => navigateTo('offer')} />}
         {stage === 'offer' && <OfferScreen onComplete={() => navigateTo('checkout')} />}
         {stage === 'checkout' && <CheckoutScreen />}
+        {stage === 'test-nav' && <TestNavigation onNavigate={(s) => navigateTo(s)} />}
       </div>
     </div>
   );
