@@ -63,6 +63,7 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
     { text: "mas isso não pode vazar", delay: 1200 },
     { text: "se vc continuar", delay: 1000 },
     { text: "é pq aceita jogar invisível", delay: 1200, read: true },
+    { text: "ouça o audio corre pode nao dar tempo", delay: 600 },
     { type: 'audio', audioUrl: VOICE_NOTE_URL, delay: 2000, read: true }
   ];
 
@@ -126,6 +127,7 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
     }
 
     setLoadingAudioId(id);
+    setAudioProgress(0);
     
     const audio = new Audio(url);
     audio.preload = "auto";
@@ -142,6 +144,9 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
     audio.oncanplaythrough = () => {
       setLoadingAudioId(null);
       setPlayingAudioId(id);
+      audio.play().catch(() => {
+        setPlayingAudioId(null);
+      });
     };
 
     audio.onended = () => {
@@ -155,17 +160,11 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
       setPlayingAudioId(null);
     };
 
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        setLoadingAudioId(null);
-        setPlayingAudioId(null);
-      });
-    }
+    // Trigger loading state visually
+    audio.load();
   };
 
-  // Waveform de alta densidade para visual premium
-  const waveformHeights = [25, 40, 15, 55, 30, 70, 20, 45, 35, 80, 25, 60, 40, 75, 20, 50, 30, 85, 40, 65, 30, 55, 25, 75, 45, 90, 25, 60, 40, 70, 30, 50, 25, 45, 15, 55, 30, 65, 40, 75, 20, 45, 35, 50, 25];
+  const waveformHeights = [25, 45, 18, 60, 35, 75, 22, 50, 40, 85, 28, 65, 42, 78, 20, 55, 32, 90, 45, 68, 35, 58, 28, 78, 48, 92, 28, 62, 42, 72, 32, 52, 28, 48, 18, 58, 32, 68, 42, 78, 22, 48, 38, 52, 28];
 
   return (
     <div className="flex flex-col h-screen bg-[#0b141a] relative overflow-hidden">
@@ -220,12 +219,12 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
               
               {msg.type === 'audio' ? (
                 <div className="flex items-center gap-3 p-1.5 min-w-[280px]">
-                  {/* Avatar com Badge de Microfone */}
+                  {/* Avatar com Badge de Microfone Estilo iOS */}
                   <div className="relative shrink-0">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 grayscale shadow-lg">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 grayscale shadow-lg transition-all duration-700 hover:grayscale-0">
                       <img src={PROFILE_IMAGE_URL} className="w-full h-full object-cover" />
                     </div>
-                    <div className="absolute -bottom-0.5 -right-0.5 bg-[#202c33] p-0.5 rounded-full shadow-md">
+                    <div className="absolute -bottom-0.5 -right-0.5 bg-[#202c33] p-0.5 rounded-full shadow-md border border-white/5">
                       <Mic size={14} className="text-[#25D366]" fill="currentColor" />
                     </div>
                   </div>
@@ -233,21 +232,26 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
                   {/* Player de Áudio */}
                   <div className="flex-1 flex flex-col gap-1.5">
                     <div className="flex items-center gap-3">
-                      {/* Botão Play/Pause Circular */}
+                      {/* Botão com Carregamento Integrado */}
                       <div className="relative w-10 h-10 flex items-center justify-center shrink-0">
                         <button 
                           onClick={() => toggleVoiceNote(msg.id, msg.audioUrl!)}
-                          className="text-white relative z-10 active:scale-90 transition-transform"
+                          disabled={loadingAudioId === msg.id}
+                          className="text-white relative z-10 active:scale-90 transition-all duration-200"
                         >
                           {loadingAudioId === msg.id ? (
-                            <Loader2 className="animate-spin w-6 h-6 text-[#25D366]" />
+                            <Loader2 className="animate-spin w-7 h-7 text-[#25D366]" />
                           ) : (
-                            playingAudioId === msg.id ? <Pause size={26} fill="currentColor" /> : <Play size={26} fill="currentColor" className="ml-1" />
+                            playingAudioId === msg.id ? (
+                              <Pause size={28} fill="currentColor" className="animate-in fade-in zoom-in duration-300" />
+                            ) : (
+                              <Play size={28} fill="currentColor" className="ml-1 animate-in fade-in zoom-in duration-300" />
+                            )
                           )}
                         </button>
                         
-                        {/* Círculo de Progresso */}
-                        <svg className="absolute inset-0 -rotate-90 w-full h-full">
+                        {/* Círculo de Progresso iOS 17 Style */}
+                        <svg className="absolute inset-0 -rotate-90 w-full h-full pointer-events-none">
                           <circle cx="20" cy="20" r="18" stroke="rgba(255,255,255,0.08)" strokeWidth="2.5" fill="none" />
                           {(playingAudioId === msg.id || loadingAudioId === msg.id) && (
                             <circle
@@ -260,26 +264,27 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
                               strokeDasharray="113"
                               strokeDashoffset={113 - (113 * audioProgress) / 100}
                               strokeLinecap="round"
-                              className="transition-all duration-150 ease-linear"
+                              className="transition-all duration-150 ease-linear shadow-[0_0_8px_rgba(37,211,102,0.6)]"
                             />
                           )}
                         </svg>
                       </div>
 
-                      {/* Waveform Dinâmica */}
-                      <div className="flex-1 flex items-end gap-[1.5px] h-7 relative">
+                      {/* Waveform Dinâmica com Pulsação */}
+                      <div className="flex-1 flex items-end gap-[1.5px] h-8 relative">
                         {waveformHeights.map((h, i) => {
                           const barProgress = (i / waveformHeights.length) * 100;
                           const isPlayed = playingAudioId === msg.id && barProgress < audioProgress;
                           return (
                             <div 
                               key={i} 
-                              className={`flex-1 rounded-full transition-all duration-300 ${
+                              className={`flex-1 rounded-full transition-all duration-500 ${
                                 isPlayed ? 'bg-[#53bdeb]' : 'bg-zinc-600'
                               } ${playingAudioId === msg.id ? 'animate-pulse' : ''}`} 
                               style={{ 
                                 height: `${h}%`,
-                                minHeight: '2px'
+                                minHeight: '2px',
+                                animationDelay: `${i * 0.05}s`
                               }} 
                             />
                           );
