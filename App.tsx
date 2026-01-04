@@ -10,9 +10,8 @@ import HackingLogin from './components/HackingLogin';
 import TikTokHack from './components/TikTokHack';
 import OfferScreen from './components/OfferScreen';
 import CheckoutScreen from './components/CheckoutScreen';
-import TestNavigation from './components/TestNavigation';
 
-type FunnelStage = 'start' | 'notification' | 'whatsapp' | 'invisible-system' | 'incoming-call' | 'call' | 'hacking-login' | 'tiktok' | 'offer' | 'checkout' | 'debug';
+type FunnelStage = 'start' | 'notification' | 'whatsapp' | 'invisible-system' | 'incoming-call' | 'call' | 'hacking-login' | 'tiktok' | 'offer' | 'checkout';
 
 const trackFBEvent = (eventName: string, params?: object) => {
   try {
@@ -58,8 +57,7 @@ const App: React.FC = () => {
   return (
     <div className={`min-h-[100dvh] bg-black transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
       <div className="mx-auto max-w-[430px] min-h-[100dvh] relative bg-black shadow-2xl">
-        {stage === 'debug' && <TestNavigation onNavigate={(s) => navigateTo(s as FunnelStage)} />}
-        {stage === 'start' && <StartScreen onStart={() => navigateTo('notification')} onDebug={() => setStage('debug')} />}
+        {stage === 'start' && <StartScreen onStart={() => navigateTo('notification')} />}
         {stage === 'notification' && <NotificationScreen onAccept={() => navigateTo('whatsapp')} />}
         {stage === 'whatsapp' && <WhatsAppChat onComplete={() => navigateTo('invisible-system')} onExit={() => setStage('start')} />}
         {stage === 'invisible-system' && <InvisibleSystemReveal onComplete={() => navigateTo('incoming-call')} />}

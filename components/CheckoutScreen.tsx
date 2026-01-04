@@ -93,31 +93,21 @@ const CheckoutScreen: React.FC = () => {
         <div className="p-6 pb-32 space-y-8 max-w-sm mx-auto w-full animate-slide-up">
           
           {/* Resumo da Oferta */}
-          <div className="bg-zinc-900/40 rounded-[2.5rem] p-7 border border-white/5 shadow-2xl relative overflow-hidden">
+          <div className="bg-zinc-900/40 rounded-[2.5rem] p-7 border border-white/5 shadow-2xl relative overflow-hidden text-center">
             <div className="relative z-10">
               <span className="text-[9px] font-black text-[#25D366] uppercase tracking-[0.3em] mb-2 block">Protocolo de Elite</span>
-              <h2 className="text-2xl font-black italic uppercase leading-none tracking-tighter mb-4">Sistema Operador Invisível</h2>
-              
-              <div className="flex flex-col gap-1">
-                <div className="flex items-baseline gap-3">
-                  <span className="text-zinc-600 line-through text-lg font-bold">R$ 197,00</span>
-                  <span className="text-3xl font-black text-[#25D366]">R$ 67,00</span>
-                </div>
-                <p className="text-[#25D366] text-[10px] font-black uppercase tracking-tighter opacity-80">
-                  Desconto especial aplicado com sucesso
-                </p>
-              </div>
+              <h2 className="text-2xl font-black italic uppercase leading-none tracking-tighter">Sistema Operador Invisível</h2>
             </div>
           </div>
 
-          {/* Formulário de Identificação */}
-          <div className="space-y-6">
+          {/* Formulário de Identificação com Efeito Flutuante */}
+          <div className="space-y-6 animate-floating">
             <div className="flex flex-col gap-1 px-1">
               <h3 className="text-[11px] uppercase font-black tracking-[0.3em] text-zinc-500">Dados de Ativação</h3>
               <div className="h-px w-8 bg-green-500/30"></div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 bg-zinc-900/30 p-4 rounded-[2rem] border border-white/5 shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
               {/* Campo Nome */}
               <div className="relative group">
                 <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-[#25D366] transition-colors">
@@ -236,6 +226,14 @@ const CheckoutScreen: React.FC = () => {
       <div className="fixed bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/10 rounded-full pointer-events-none z-50" />
       
       <style>{`
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+          100% { transform: translateY(0px); }
+        }
+        .animate-floating {
+          animation: float 4s ease-in-out infinite;
+        }
         .animate-slide-up {
           animation: slideUp 0.5s ease-out forwards;
         }
