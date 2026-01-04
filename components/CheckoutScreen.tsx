@@ -228,7 +228,7 @@ const CheckoutScreen: React.FC = () => {
       <style>{`
         @keyframes float {
           0% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
+          50% { transform: translateY(-10px); }
           100% { transform: translateY(0px); }
         }
         .animate-floating {

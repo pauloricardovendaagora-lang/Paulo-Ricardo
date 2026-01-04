@@ -58,7 +58,7 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
            style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '50px 50px' }} />
 
       {/* Header Fixo */}
-      <div className="flex items-center justify-between p-6 z-50 shrink-0 bg-black/60 backdrop-blur-md">
+      <div className="flex items-center justify-between p-6 z-50 shrink-0 bg-black/60 backdrop-blur-md border-b border-white/5">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-[#22c55e] rounded-full animate-pulse shadow-[0_0_8px_#22c55e]" />
           <span className="text-[12px] font-bold text-[#22c55e] uppercase tracking-widest">CONEXÃO SEGURA</span>
@@ -71,7 +71,7 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
       {/* Área de Conteúdo Rolável */}
       <div className="flex-1 overflow-y-auto z-10 p-4 space-y-6 custom-scrollbar pb-32">
         
-        {/* Metric Grid 2x2 (Conforme imagem) */}
+        {/* Metric Grid 2x2 */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-[#141414] border border-white/5 p-5 rounded-[2rem] space-y-3">
             <div className="flex items-center gap-2 opacity-50">
@@ -144,7 +144,7 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
           </p>
         </div>
 
-        {/* O Mecanismo - Lista de Benefícios */}
+        {/* O Mecanismo */}
         <div className="space-y-4">
           <div className="flex items-center gap-2 px-2">
             <Layers size={16} className="text-[#00ff41]" />
@@ -165,7 +165,7 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
           </div>
         </div>
 
-        {/* Comparação Rapida */}
+        {/* Comparação */}
         <div className="bg-gradient-to-r from-red-500/5 to-transparent border border-white/5 p-6 rounded-[2rem] space-y-4">
           <h4 className="text-[11px] font-black uppercase text-zinc-500 tracking-widest">MÉTODO COMUM vs SISTEMA</h4>
           <div className="flex justify-between items-center text-xs font-black italic">
@@ -197,21 +197,20 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
           </p>
         </div>
 
-        {/* Frase Final de Decisão */}
+        {/* Frase Final */}
         <div className="text-center space-y-2 py-4">
           <h4 className="text-[14px] font-black uppercase text-white italic">DECISÃO</h4>
           <p className="text-[10px] text-zinc-500 uppercase font-black leading-tight tracking-[0.2em]">
             Ou você treina o algoritmo. <br/> Ou continua pagando caro.
           </p>
         </div>
-
       </div>
 
       {/* Rodapé CTA */}
       <div className="shrink-0 p-6 pb-12 bg-black/90 backdrop-blur-3xl border-t border-white/5 z-50">
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col items-center justify-center px-2 py-4">
-            <span className="text-red-600 line-through text-4xl font-black decoration-[4px] drop-shadow-[0_0_10px_rgba(220,38,38,0.3)]">R$ 97</span>
+          <div className="flex flex-col items-center justify-center px-2 py-2">
+            <span className="text-red-600 line-through text-4xl font-black decoration-[4px] drop-shadow-[0_0_10px_rgba(220,38,38,0.3)] italic">R$ 97</span>
           </div>
 
           <button 
@@ -229,7 +228,6 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
         </div>
       </div>
 
-      {/* iOS Indicator */}
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/10 rounded-full" />
 
       <style>{`

@@ -9,15 +9,13 @@ import {
   ShieldAlert, 
   Video, 
   Terminal, 
-  LayoutDashboard, 
-  Database, 
   ChevronRight, 
   ShoppingCart,
   Activity,
   Zap,
   Lock,
-  EyeOff,
-  ShoppingBag
+  ShoppingBag,
+  ArrowLeft
 } from 'lucide-react';
 
 interface TestNavigationProps {
@@ -29,13 +27,12 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
     { id: 'start', label: '00', title: 'Sessão Inicial', sub: 'Handshake Protocol', icon: Play, color: 'text-green-500', bg: 'bg-green-500/10', goal: 'ENTRY' },
     { id: 'notification', label: '01', title: 'Interrupção', sub: 'Notificação iOS 17', icon: Bell, color: 'text-blue-400', bg: 'bg-blue-400/10', goal: 'ATTENTION' },
     { id: 'whatsapp', label: '02', title: 'Engajamento', sub: 'WhatsApp Direct', icon: MessageSquare, color: 'text-[#25D366]', bg: 'bg-[#25D366]/10', goal: 'LEAD' },
-    { id: 'invisible-system', label: '03', title: 'Revelação', sub: 'Invisible Narrative', icon: EyeOff, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'AWARENESS' },
-    { id: 'incoming-call', label: '04', title: 'Escalada', sub: 'Incoming Voice Call', icon: PhoneIncoming, color: 'text-red-500', bg: 'bg-red-500/10', goal: 'INTERRUPT' },
-    { id: 'call', label: '05', title: 'Doutrinação', sub: 'Operador Calling', icon: Phone, color: 'text-purple-400', bg: 'bg-purple-400/10', goal: 'RETENTION' },
-    { id: 'hacking-login', label: '06', title: 'Credenciais', sub: 'Hacking Terminal', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
-    { id: 'tiktok', label: '07', title: 'Prova Social', sub: 'TikTok Inversion', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
-    { id: 'offer', label: '08', title: 'Oferta', sub: 'Sales Deck', icon: ShoppingBag, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'DESIRE' },
-    { id: 'checkout', label: '09', title: 'Conversão', sub: 'Final Checkout', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'MONEY' },
+    { id: 'incoming-call', label: '03', title: 'Escalada', sub: 'Incoming Voice Call', icon: PhoneIncoming, color: 'text-red-500', bg: 'bg-red-500/10', goal: 'INTERRUPT' },
+    { id: 'call', label: '04', title: 'Doutrinação', sub: 'Operador Calling', icon: Phone, color: 'text-purple-400', bg: 'bg-purple-400/10', goal: 'RETENTION' },
+    { id: 'hacking-login', label: '05', title: 'Credenciais', sub: 'Hacking Terminal', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
+    { id: 'tiktok', label: '06', title: 'Prova Social', sub: 'TikTok Inversion', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
+    { id: 'offer', label: '07', title: 'Oferta', sub: 'Sales Deck / Dashboard', icon: ShoppingBag, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'DESIRE' },
+    { id: 'checkout', label: '08', title: 'Conversão', sub: 'Final Checkout', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'MONEY' },
   ];
 
   return (
@@ -111,8 +108,8 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
                 onClick={() => onNavigate('start')}
                 className="flex-1 py-4 bg-zinc-900/80 border border-white/5 rounded-2xl text-[9px] font-black uppercase tracking-widest text-zinc-400 flex items-center justify-center gap-2 active:bg-zinc-800"
             >
-                <Lock size={12} />
-                Reiniciar
+                <ArrowLeft size={12} />
+                Voltar ao Início
             </button>
             <div className="bg-[#00ff41]/10 border border-[#00ff41]/20 rounded-2xl px-4 flex items-center justify-center">
                 <Zap size={14} className="text-[#00ff41] animate-pulse" />
