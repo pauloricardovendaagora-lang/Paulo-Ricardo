@@ -13,9 +13,9 @@ import {
   ShoppingCart,
   Activity,
   Zap,
-  Lock,
   ShoppingBag,
-  ArrowLeft
+  ArrowLeft,
+  Layout
 } from 'lucide-react';
 
 interface TestNavigationProps {
@@ -25,21 +25,23 @@ interface TestNavigationProps {
 const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
   const stages = [
     { id: 'start', label: '00', title: 'Sessão Inicial', sub: 'Handshake Protocol', icon: Play, color: 'text-green-500', bg: 'bg-green-500/10', goal: 'ENTRY' },
-    { id: 'notification', label: '01', title: 'Interrupção', sub: 'Notificação iOS 17', icon: Bell, color: 'text-blue-400', bg: 'bg-blue-400/10', goal: 'ATTENTION' },
-    { id: 'whatsapp', label: '02', title: 'Engajamento', sub: 'WhatsApp Direct', icon: MessageSquare, color: 'text-[#25D366]', bg: 'bg-[#25D366]/10', goal: 'LEAD' },
-    { id: 'incoming-call', label: '03', title: 'Escalada', sub: 'Incoming Voice Call', icon: PhoneIncoming, color: 'text-red-500', bg: 'bg-red-500/10', goal: 'INTERRUPT' },
-    { id: 'call', label: '04', title: 'Doutrinação', sub: 'Operador Calling', icon: Phone, color: 'text-purple-400', bg: 'bg-purple-400/10', goal: 'RETENTION' },
-    { id: 'hacking-login', label: '05', title: 'Credenciais', sub: 'Hacking Terminal', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
-    { id: 'tiktok', label: '06', title: 'Prova Social', sub: 'TikTok Inversion', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
-    { id: 'offer', label: '07', title: 'Oferta', sub: 'Sales Deck / Dashboard', icon: ShoppingBag, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'DESIRE' },
-    { id: 'checkout', label: '08', title: 'Conversão', sub: 'Final Checkout', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'MONEY' },
+    { id: 'notification', label: '01', title: 'Interrupção', sub: 'iOS 17 Notify', icon: Bell, color: 'text-blue-400', bg: 'bg-blue-400/10', goal: 'ATTENTION' },
+    { id: 'whatsapp', label: '02', title: 'Chat WhatsApp', sub: 'Operator Direct', icon: MessageSquare, color: 'text-[#25D366]', bg: 'bg-[#25D366]/10', goal: 'ENGAGE' },
+    { id: 'incoming-call', label: '03', title: 'Chamada', sub: 'Receiving Signal', icon: PhoneIncoming, color: 'text-red-500', bg: 'bg-red-500/10', goal: 'INTERRUPT' },
+    { id: 'call', label: '04', title: 'Ligação Ativa', sub: 'Voice Script', icon: Phone, color: 'text-purple-400', bg: 'bg-purple-400/10', goal: 'RETENTION' },
+    { id: 'hacking-login', label: '05', title: 'Terminal', sub: 'Credentials Bypass', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
+    { id: 'tiktok', label: '06', title: 'TikTok Hack', sub: 'Social Proof Video', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
+    { id: 'offer', label: '07', title: 'Dashboard', sub: 'Sales & Metrics', icon: ShoppingBag, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'DESIRE' },
+    { id: 'checkout', label: '08', title: 'Checkout', sub: 'Final Conversion', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'MONEY' },
   ];
 
   return (
     <div className="h-[100dvh] bg-black text-white font-mono relative flex flex-col overflow-hidden">
+      {/* Grid Overlay */}
       <div className="fixed inset-0 opacity-[0.05] pointer-events-none z-0" 
            style={{ backgroundImage: 'linear-gradient(#00ff41 1px, transparent 1px), linear-gradient(90deg, #00ff41 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
       
+      {/* Header */}
       <div className="p-6 pt-12 shrink-0 relative z-20 bg-black/80 backdrop-blur-md border-b border-[#00ff41]/20">
         <div className="flex flex-col items-center">
           <div className="bg-[#00ff41]/10 p-3 rounded-2xl border border-[#00ff41]/30 mb-3 shadow-[0_0_20px_rgba(0,255,65,0.2)]">
@@ -48,12 +50,13 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
           <h1 className="text-lg font-black uppercase tracking-tighter text-center italic">Comando Central</h1>
           <div className="flex items-center gap-2 mt-1">
               <span className="w-1.5 h-1.5 bg-[#00ff41] rounded-full animate-pulse shadow-[0_0_5px_#00ff41]" />
-              <p className="text-[#00ff41] text-[8px] uppercase tracking-[0.4em] font-black">ROOT_ACCESS_GRANTED</p>
+              <p className="text-[#00ff41] text-[8px] uppercase tracking-[0.4em] font-black">STABLE_ENVIRONMENT</p>
           </div>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth px-6 py-6 relative z-10 custom-scrollbar">
+      {/* List */}
+      <div className="flex-1 overflow-y-auto scroll-smooth px-6 py-6 relative z-10 custom-scrollbar">
         <div className="grid gap-3">
           {stages.map((stage) => (
             <button
@@ -71,7 +74,7 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
                   </div>
                   <div className="flex flex-col items-start text-left">
                     <div className="flex items-center gap-2">
-                        <span className="text-[9px] font-black text-zinc-600">STG.{stage.label}</span>
+                        <span className="text-[9px] font-black text-zinc-600">MOD.{stage.label}</span>
                         <div className="h-px w-4 bg-zinc-800" />
                     </div>
                     <span className="text-sm font-bold tracking-tight text-white group-hover:text-[#00ff41] transition-colors uppercase">{stage.title}</span>
@@ -83,22 +86,23 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
           ))}
         </div>
 
+        {/* Footer info */}
         <div className="mt-8 p-5 rounded-3xl bg-zinc-900/20 border border-dashed border-[#00ff41]/20">
           <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Activity size={12} className="text-[#00ff41]" />
                 <h3 className="text-[9px] font-black uppercase tracking-widest text-zinc-500">System Logs</h3>
               </div>
-              <span className="text-[8px] bg-[#00ff41]/10 text-[#00ff41] px-1.5 py-0.5 rounded">STABLE</span>
+              <span className="text-[8px] bg-[#00ff41]/10 text-[#00ff41] px-1.5 py-0.5 rounded italic font-bold">READY</span>
           </div>
           <div className="space-y-2">
               <div className="flex justify-between text-[9px] font-bold uppercase">
-                  <span className="text-zinc-600">Funnel Integrity:</span>
-                  <span className="text-[#00ff41]">100%</span>
+                  <span className="text-zinc-600">Funnel_State:</span>
+                  <span className="text-[#00ff41]">DEVELOPMENT_MODE</span>
               </div>
               <div className="flex justify-between text-[9px] font-bold uppercase">
-                  <span className="text-zinc-600">Active Handlers:</span>
-                  <span className="text-white">Socket_v2.5_PRO</span>
+                  <span className="text-zinc-600">Assets_Loaded:</span>
+                  <span className="text-white">100%</span>
               </div>
           </div>
         </div>
@@ -111,14 +115,11 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
                 <ArrowLeft size={12} />
                 Voltar ao Início
             </button>
-            <div className="bg-[#00ff41]/10 border border-[#00ff41]/20 rounded-2xl px-4 flex items-center justify-center">
-                <Zap size={14} className="text-[#00ff41] animate-pulse" />
-            </div>
         </div>
-        <div className="h-10" />
+        <div className="h-20" />
       </div>
 
-      <div className="fixed inset-0 pointer-events-none z-[100] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.05)_50%)] bg-[length:100%_4px] opacity-20" />
+      {/* iOS indicator */}
       <div className="fixed bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/20 rounded-full pointer-events-none z-[110]" />
 
       <style>{`

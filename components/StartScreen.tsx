@@ -1,18 +1,27 @@
 
 import React from 'react';
-import { ShieldAlert, Zap } from 'lucide-react';
+import { ShieldAlert, Zap, Terminal } from 'lucide-react';
 
 interface StartScreenProps {
   onStart: () => void;
+  onDebug?: () => void;
 }
 
-const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
+const StartScreen: React.FC<StartScreenProps> = ({ onStart, onDebug }) => {
   return (
     <div className="h-screen bg-black flex flex-col items-center justify-center p-8 text-center relative overflow-hidden font-mono">
       {/* Background Decor */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.2)_50%)] bg-[length:100%_4px]" />
       </div>
+
+      {/* Debug Trigger (Subtle) */}
+      <button 
+        onClick={onDebug}
+        className="absolute top-12 right-6 p-3 bg-zinc-900/50 border border-white/5 rounded-full text-zinc-800 hover:text-green-500 transition-colors z-50"
+      >
+        <Terminal size={18} />
+      </button>
 
       <div className="z-10 space-y-8 max-w-xs animate-slide-up">
         <div className="relative inline-block">

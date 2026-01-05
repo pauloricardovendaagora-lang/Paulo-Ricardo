@@ -71,7 +71,6 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
     let currentStep = 0;
     const addMessage = async () => {
       if (currentStep >= fullCopy.length) {
-        // Removido setShowChoices(true) daqui para aguardar o áudio terminar
         return;
       }
 
@@ -138,6 +137,11 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
         const progress = (audio.currentTime / audio.duration) * 100;
         setAudioProgress(progress);
         setAudioCurrentTime(formatAudioTime(audio.currentTime));
+
+        // NOVO: Mostrar as escolhas quando o áudio chegar na metade (50%)
+        if (audio.currentTime >= audio.duration / 2 && !showChoices) {
+          setShowChoices(true);
+        }
       }
     };
 
@@ -153,7 +157,7 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
       setPlayingAudioId(null);
       setAudioProgress(0);
       setAudioCurrentTime('0:00');
-      // Mostrar escolhas quando o áudio terminar
+      // Garante que mostre caso o ontimeupdate não tenha disparado no ponto exato
       setShowChoices(true);
     };
 
@@ -162,7 +166,6 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
       setPlayingAudioId(null);
     };
 
-    // Trigger loading state visually
     audio.load();
   };
 
@@ -221,7 +224,6 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
               
               {msg.type === 'audio' ? (
                 <div className="flex items-center gap-3 p-1.5 min-w-[280px]">
-                  {/* Avatar com Badge de Microfone Estilo iOS */}
                   <div className="relative shrink-0">
                     <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 grayscale shadow-lg transition-all duration-700 hover:grayscale-0">
                       <img src={PROFILE_IMAGE_URL} className="w-full h-full object-cover" />
@@ -231,10 +233,8 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
                     </div>
                   </div>
 
-                  {/* Player de Áudio */}
                   <div className="flex-1 flex flex-col gap-1.5">
                     <div className="flex items-center gap-3">
-                      {/* Botão com Carregamento Integrado */}
                       <div className="relative w-10 h-10 flex items-center justify-center shrink-0">
                         <button 
                           onClick={() => toggleVoiceNote(msg.id, msg.audioUrl!)}
@@ -252,7 +252,6 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
                           )}
                         </button>
                         
-                        {/* Círculo de Progresso iOS 17 Style */}
                         <svg className="absolute inset-0 -rotate-90 w-full h-full pointer-events-none">
                           <circle cx="20" cy="20" r="18" stroke="rgba(255,255,255,0.08)" strokeWidth="2.5" fill="none" />
                           {(playingAudioId === msg.id || loadingAudioId === msg.id) && (
@@ -272,7 +271,6 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
                         </svg>
                       </div>
 
-                      {/* Waveform Dinâmica com Pulsação */}
                       <div className="flex-1 flex items-end gap-[1.5px] h-8 relative">
                         {waveformHeights.map((h, i) => {
                           const barProgress = (i / waveformHeights.length) * 100;
@@ -294,7 +292,6 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
                       </div>
                     </div>
 
-                    {/* Meta Info Áudio */}
                     <div className="flex items-center justify-between px-1">
                       <span className="text-[11px] text-zinc-400 font-bold tabular-nums">
                         {playingAudioId === msg.id ? audioCurrentTime : '1:16'}
@@ -338,14 +335,10 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
                 ➡️ Continuar em silêncio
               </div>
               
-              {/* Efeitos Visuais de "Pane" */}
               <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity">
                  <div className="absolute top-0 left-0 w-full h-px bg-red-500/50 animate-pane-line" />
                  <div className="absolute bottom-0 left-0 w-full h-px bg-blue-500/50 animate-pane-line-reverse" />
               </div>
-            </button>
-            <button onClick={onExit} className="w-full bg-white/5 text-red-500 py-4 rounded-xl font-bold border border-red-500/20 active:bg-red-500/10 transition-colors">
-              ➡️ Sair agora
             </button>
           </div>
         )}
