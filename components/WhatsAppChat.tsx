@@ -1,11 +1,12 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, Phone, Video, MoreVertical, Send, Mic, Plus, Camera, CheckCheck, Signal, Wifi, Play, Pause, Loader2 } from 'lucide-react';
+import { ChevronLeft, Phone, Video, MoreVertical, Send, Mic, Plus, Camera, CheckCheck, Signal, Wifi, Play, Pause, Loader2, Download } from 'lucide-react';
 import { Message } from '../types';
 
 const MESSAGE_SOUND_URL = 'https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3';
 const PROFILE_IMAGE_URL = 'https://res.cloudinary.com/dwhekgupo/image/upload/v1767325801/avatar_haker_ads_p3zmug.jpg';
 const VOICE_NOTE_URL = 'https://res.cloudinary.com/dwhekgupo/video/upload/v1767454353/a66c8668-6c2e-416e-8ef8-ad1bf40908f4_1_hyt4hm.mp3';
+const PROOF_IMAGE_URL = 'https://res.cloudinary.com/dwhekgupo/image/upload/v1768018205/print_02_h4liwk.png';
 
 interface WhatsAppChatProps {
   onComplete: () => void;
@@ -51,19 +52,26 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
   };
 
   const fullCopy = [
-    { text: "vc não devia ter chegado até aqui", delay: 800 },
-    { text: "isso já passou do ponto de curiosidade", delay: 1000 },
-    { text: "se alguém perceber", delay: 800 },
-    { text: "o acesso cai", delay: 1200 },
-    { text: "e eu desapareço", delay: 1500, read: true },
-    { text: "então presta atenção", delay: 800 },
-    { text: "o sistema não foi feito pra vc ganhar", delay: 800 },
-    { text: "foi feito pra vc gastar", delay: 1200 },
-    { text: "eu descobri como jogar fora disso", delay: 1500 },
-    { text: "mas isso não pode vazar", delay: 1200 },
-    { text: "se vc continuar", delay: 1000 },
-    { text: "é pq aceita jogar invisível", delay: 1200, read: true },
-    { text: "ouça o audio corre pode nao dar tempo", delay: 600 },
+    { text: "Você não devia ter chegado até aqui.", delay: 1200 },
+    { text: "Isso já passou da curiosidade.", delay: 1000 },
+    { text: "Se alguém perceber esse acesso, eu caio fora.", delay: 1500, read: true },
+    { text: "Então presta atenção.", delay: 1000 },
+    { text: "O sistema não foi feito pra você ganhar.", delay: 1000 },
+    { text: "Foi feito pra você gastar.", delay: 1200 },
+    { text: "Eu descobri como jogar fora dele.", delay: 1500, read: true },
+    { text: "Eu sei que você roda anúncios e não consegue lucro.", delay: 1800 },
+    { text: "Só queima dinheiro, seguindo o que os gurus mandam.", delay: 1800 },
+    { text: "O problema não é você. É a estrutura errada.", delay: 1500, read: true },
+    { text: "No final de 2025 o mercado resetou.", delay: 1200 },
+    { text: "Desde então, orçamento não decide mais nada.", delay: 1500 },
+    { text: "Hoje eu vendo todos os dias usando 7 reais.", delay: 1500, read: true },
+    { type: 'image', imageUrl: PROOF_IMAGE_URL, delay: 2000, read: true },
+    { text: "O pulo do gato não é tráfego. É a estrutura de anúncios.", delay: 1800 },
+    { text: "Eu poderia cobrar caro por isso. Criei inimigos por menos.", delay: 2000 },
+    { text: "Mas se alguém tivesse me dado essa direção antes, eu não teria sangrado tanto.", delay: 2200 },
+    { text: "Só te peço uma coisa: aprende a jogar invisível.", delay: 1800, read: true },
+    { text: "vou te enviar um áudio agora", delay: 1000 },
+    { text: "Depois disso, eu sumo.", delay: 1500, read: true },
     { type: 'audio', audioUrl: VOICE_NOTE_URL, delay: 2000, read: true }
   ];
 
@@ -77,7 +85,7 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
       const step = fullCopy[currentStep];
       setIsTyping(true);
       
-      const typingTime = step.type === 'audio' ? 2000 : Math.min(Math.max((step.text?.length || 0) * 25, 1200), 3000);
+      const typingTime = (step.type === 'audio' || step.type === 'image') ? 2000 : Math.min(Math.max((step.text?.length || 0) * 25, 1200), 3000);
       await new Promise(r => setTimeout(r, typingTime));
       setIsTyping(false);
 
@@ -85,6 +93,7 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
         id: Date.now().toString(),
         text: step.text,
         audioUrl: step.audioUrl,
+        imageUrl: (step as any).imageUrl,
         type: (step.type as any) || 'text',
         sender: 'operator',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -138,7 +147,6 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
         setAudioProgress(progress);
         setAudioCurrentTime(formatAudioTime(audio.currentTime));
 
-        // NOVO: Mostrar as escolhas quando o áudio chegar na metade (50%)
         if (audio.currentTime >= audio.duration / 2 && !showChoices) {
           setShowChoices(true);
         }
@@ -157,7 +165,6 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
       setPlayingAudioId(null);
       setAudioProgress(0);
       setAudioCurrentTime('0:00');
-      // Garante que mostre caso o ontimeupdate não tenha disparado no ponto exato
       setShowChoices(true);
     };
 
@@ -188,7 +195,7 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
       {/* Header WhatsApp */}
       <div className="bg-[#1c1c1e]/95 backdrop-blur-xl border-b border-white/10 pt-12 pb-2 px-3 flex items-center justify-between z-10 shrink-0">
         <div className="flex items-center gap-1">
-          <ChevronLeft className="text-[#007aff] w-8 h-8 cursor-pointer" />
+          <ChevronLeft onClick={onExit} className="text-[#007aff] w-8 h-8 cursor-pointer active:opacity-50 transition-opacity" />
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-zinc-800 overflow-hidden border border-white/5 shadow-lg">
                <img src={PROFILE_IMAGE_URL} alt="Operator" className="w-full h-full object-cover" />
@@ -218,7 +225,7 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
 
         {messages.map((msg) => (
           <div key={msg.id} className="flex flex-col animate-slide-up">
-            <div className={`max-w-[92%] rounded-2xl p-2 relative shadow-md transition-all duration-300 ${
+            <div className={`max-w-[92%] rounded-2xl p-1 relative shadow-md transition-all duration-300 ${
               msg.sender === 'user' ? 'bg-[#005c4b] self-end rounded-tr-none' : 'bg-[#202c33] self-start rounded-tl-none border border-white/5'
             }`}>
               
@@ -303,14 +310,27 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
                     </div>
                   </div>
                 </div>
-              ) : (
-                <>
-                  <p className="text-[15.5px] text-white pr-12 pl-1 leading-relaxed">{msg.text}</p>
-                  <div className="absolute bottom-1 right-2 flex items-center gap-1">
+              ) : msg.type === 'image' ? (
+                <div className="flex flex-col gap-1 w-full max-w-[300px]">
+                  <div className="relative rounded-xl overflow-hidden group">
+                    <img src={msg.imageUrl} className="w-full h-auto object-cover" alt="Proof" />
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                       <div className="bg-black/60 p-2 rounded-full"><Download size={20} className="text-white" /></div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-end px-2 pb-1 gap-1">
                     <span className="text-[10px] text-white/40">{msg.timestamp}</span>
                     <CheckCheck className={`w-3.5 h-3.5 ${msg.status === 'read' ? 'text-[#53bdeb]' : 'text-white/30'}`} />
                   </div>
-                </>
+                </div>
+              ) : (
+                <div className="p-1">
+                  <p className="text-[15.5px] text-white pr-12 pl-1 leading-relaxed">{msg.text}</p>
+                  <div className="absolute bottom-1.5 right-2 flex items-center gap-1">
+                    <span className="text-[10px] text-white/40">{msg.timestamp}</span>
+                    <CheckCheck className={`w-3.5 h-3.5 ${msg.status === 'read' ? 'text-[#53bdeb]' : 'text-white/30'}`} />
+                  </div>
+                </div>
               )}
             </div>
           </div>

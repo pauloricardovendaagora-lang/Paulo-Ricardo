@@ -3,7 +3,8 @@ export interface Message {
   id: string;
   text?: string;
   audioUrl?: string;
-  type?: 'text' | 'audio';
+  imageUrl?: string;
+  type?: 'text' | 'audio' | 'image';
   sender: 'operator' | 'user';
   timestamp: string;
   status: 'sent' | 'delivered' | 'read';

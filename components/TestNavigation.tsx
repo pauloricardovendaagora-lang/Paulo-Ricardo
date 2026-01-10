@@ -15,24 +15,30 @@ import {
   Zap,
   ShoppingBag,
   ArrowLeft,
-  Layout
+  EyeOff,
+  Flame
 } from 'lucide-react';
 
 interface TestNavigationProps {
-  onNavigate: (stage: any) => void;
+  onNavigate: (stage: string) => void;
 }
 
 const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
-  const stages = [
+  const mainFunnel = [
     { id: 'start', label: '00', title: 'Sessão Inicial', sub: 'Handshake Protocol', icon: Play, color: 'text-green-500', bg: 'bg-green-500/10', goal: 'ENTRY' },
-    { id: 'notification', label: '01', title: 'Interrupção', sub: 'iOS 17 Notify', icon: Bell, color: 'text-blue-400', bg: 'bg-blue-400/10', goal: 'ATTENTION' },
-    { id: 'whatsapp', label: '02', title: 'Chat WhatsApp', sub: 'Operator Direct', icon: MessageSquare, color: 'text-[#25D366]', bg: 'bg-[#25D366]/10', goal: 'ENGAGE' },
-    { id: 'incoming-call', label: '03', title: 'Chamada', sub: 'Receiving Signal', icon: PhoneIncoming, color: 'text-red-500', bg: 'bg-red-500/10', goal: 'INTERRUPT' },
-    { id: 'call', label: '04', title: 'Ligação Ativa', sub: 'Voice Script', icon: Phone, color: 'text-purple-400', bg: 'bg-purple-400/10', goal: 'RETENTION' },
-    { id: 'hacking-login', label: '05', title: 'Terminal', sub: 'Credentials Bypass', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
-    { id: 'tiktok', label: '06', title: 'TikTok Hack', sub: 'Social Proof Video', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
-    { id: 'offer', label: '07', title: 'Dashboard', sub: 'Sales & Metrics', icon: ShoppingBag, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'DESIRE' },
-    { id: 'checkout', label: '08', title: 'Checkout', sub: 'Final Conversion', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'MONEY' },
+    { id: 'notification', label: '01', title: 'Interrupção iOS', sub: 'iPhone Notification', icon: Bell, color: 'text-blue-400', bg: 'bg-blue-400/10', goal: 'ATTENTION' },
+    { id: 'whatsapp', label: '02', title: 'Chat WhatsApp', sub: 'Engajamento Direto', icon: MessageSquare, color: 'text-[#25D366]', bg: 'bg-[#25D366]/10', goal: 'ENGAGE' },
+    { id: 'incoming-call', label: '03', title: 'Chamada iOS', sub: 'Recebendo Sinal', icon: PhoneIncoming, color: 'text-red-500', bg: 'bg-red-500/10', goal: 'INTERRUPT' },
+    { id: 'call', label: '04', title: 'Voz do Operador', sub: 'Voice VSL Script', icon: Phone, color: 'text-purple-400', bg: 'bg-purple-400/10', goal: 'RETENTION' },
+    { id: 'invisible-reveal', label: '05', title: 'Revelação', sub: 'O Sistema Invisível', icon: EyeOff, color: 'text-cyan-400', bg: 'bg-cyan-400/10', goal: 'AUTHORITY' },
+    { id: 'hacking-login', label: '06', title: 'Terminal Hack', sub: 'Invasão de Sistema', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
+    { id: 'tiktok', label: '07', title: 'TikTok Hacked', sub: 'Social Proof Flow', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
+    { id: 'offer', label: '08', title: 'Dashboard VSL', sub: 'Métricas de Venda', icon: ShoppingBag, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'DESIRE' },
+    { id: 'checkout', label: '09', title: 'Checkout Final', sub: 'Conversão em Dinheiro', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'CASHFLOW' },
+  ];
+
+  const assetsLab = [
+    { id: 'creatives', label: 'LAB', title: 'Lab de Criativos', sub: 'Scripts & Mídias', icon: Flame, color: 'text-orange-400', bg: 'bg-orange-400/10', goal: 'ASSETS' },
   ];
 
   return (
@@ -56,9 +62,15 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
       </div>
 
       {/* List */}
-      <div className="flex-1 overflow-y-auto scroll-smooth px-6 py-6 relative z-10 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto scroll-smooth px-6 py-6 relative z-10 custom-scrollbar pb-32">
+        
+        <div className="mb-4 flex items-center gap-2 px-1">
+          <Activity size={12} className="text-[#00ff41]" />
+          <h2 className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Fluxo do Funil</h2>
+        </div>
+
         <div className="grid gap-3">
-          {stages.map((stage) => (
+          {mainFunnel.map((stage) => (
             <button
               key={stage.id}
               onClick={() => onNavigate(stage.id)}
@@ -86,24 +98,41 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
           ))}
         </div>
 
+        <div className="mt-8 mb-4 flex items-center gap-2 px-1">
+          <Zap size={12} className="text-orange-400" />
+          <h2 className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Recursos do Projeto</h2>
+        </div>
+
+        <div className="grid gap-3">
+          {assetsLab.map((stage) => (
+            <button
+              key={stage.id}
+              onClick={() => onNavigate(stage.id)}
+              className="w-full flex items-center justify-between bg-zinc-900/40 hover:bg-zinc-800/60 border border-white/5 p-4 rounded-2xl transition-all active:scale-[0.98] group relative overflow-hidden"
+            >
+              <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-xl ${stage.bg} ${stage.color} transition-all group-hover:scale-110 shadow-lg`}>
+                    <stage.icon size={18} />
+                  </div>
+                  <div className="flex flex-col items-start text-left">
+                    <span className="text-sm font-bold tracking-tight text-white group-hover:text-orange-400 transition-colors uppercase">{stage.title}</span>
+                    <span className="text-[9px] font-medium text-zinc-500 italic">{stage.sub}</span>
+                  </div>
+              </div>
+              <ChevronRight size={16} className="text-zinc-700 group-hover:text-orange-400 group-hover:translate-x-1 transition-all" />
+            </button>
+          ))}
+        </div>
+
         {/* Footer info */}
-        <div className="mt-8 p-5 rounded-3xl bg-zinc-900/20 border border-dashed border-[#00ff41]/20">
-          <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Activity size={12} className="text-[#00ff41]" />
-                <h3 className="text-[9px] font-black uppercase tracking-widest text-zinc-500">System Logs</h3>
-              </div>
-              <span className="text-[8px] bg-[#00ff41]/10 text-[#00ff41] px-1.5 py-0.5 rounded italic font-bold">READY</span>
+        <div className="mt-10 p-5 rounded-3xl bg-zinc-900/20 border border-dashed border-[#00ff41]/20">
+          <div className="flex justify-between text-[9px] font-bold uppercase mb-2">
+              <span className="text-zinc-600">Status do Sistema:</span>
+              <span className="text-[#00ff41] animate-pulse">PRONTO_PARA_TESTE</span>
           </div>
-          <div className="space-y-2">
-              <div className="flex justify-between text-[9px] font-bold uppercase">
-                  <span className="text-zinc-600">Funnel_State:</span>
-                  <span className="text-[#00ff41]">DEVELOPMENT_MODE</span>
-              </div>
-              <div className="flex justify-between text-[9px] font-bold uppercase">
-                  <span className="text-zinc-600">Assets_Loaded:</span>
-                  <span className="text-white">100%</span>
-              </div>
+          <div className="flex justify-between text-[9px] font-bold uppercase">
+              <span className="text-zinc-600">Ambiente:</span>
+              <span className="text-white">PRODUÇÃO_GAMIFICADA</span>
           </div>
         </div>
 
@@ -113,10 +142,9 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
                 className="flex-1 py-4 bg-zinc-900/80 border border-white/5 rounded-2xl text-[9px] font-black uppercase tracking-widest text-zinc-400 flex items-center justify-center gap-2 active:bg-zinc-800"
             >
                 <ArrowLeft size={12} />
-                Voltar ao Início
+                Reiniciar Funil
             </button>
         </div>
-        <div className="h-20" />
       </div>
 
       {/* iOS indicator */}
