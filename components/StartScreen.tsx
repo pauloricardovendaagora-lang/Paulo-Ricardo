@@ -1,12 +1,13 @@
 
 import React from 'react';
-import { ShieldAlert, Zap } from 'lucide-react';
+import { ShieldAlert, Zap, Terminal } from 'lucide-react';
 
 interface StartScreenProps {
   onStart: () => void;
+  onDebug?: () => void;
 }
 
-const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
+const StartScreen: React.FC<StartScreenProps> = ({ onStart, onDebug }) => {
   return (
     <div className="h-screen bg-black flex flex-col items-center justify-center p-8 text-center relative overflow-hidden font-mono">
       {/* Background Decor */}
@@ -44,9 +45,20 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
         </p>
       </div>
 
-      <div className="absolute bottom-8 left-0 right-0 text-[9px] text-zinc-800 uppercase tracking-[0.5em] font-bold">
+      <div className="absolute bottom-8 left-0 right-0 text-[9px] text-zinc-800 uppercase tracking-[0.5em] font-bold pointer-events-none">
         Secure Handshake Protocol v2.5
       </div>
+
+      {/* Gatilho Secreto de Debug */}
+      {onDebug && (
+        <button 
+          onClick={onDebug}
+          className="absolute bottom-8 right-8 text-zinc-900 hover:text-zinc-700 transition-colors z-50 p-4 active:scale-90"
+          aria-label="Admin Access"
+        >
+          <Terminal size={14} />
+        </button>
+      )}
     </div>
   );
 };

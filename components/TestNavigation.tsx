@@ -15,7 +15,6 @@ import {
   Zap,
   ShoppingBag,
   ArrowLeft,
-  EyeOff,
   Flame
 } from 'lucide-react';
 
@@ -30,11 +29,10 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
     { id: 'whatsapp', label: '02', title: 'Chat WhatsApp', sub: 'Engajamento Direto', icon: MessageSquare, color: 'text-[#25D366]', bg: 'bg-[#25D366]/10', goal: 'ENGAGE' },
     { id: 'incoming-call', label: '03', title: 'Chamada iOS', sub: 'Recebendo Sinal', icon: PhoneIncoming, color: 'text-red-500', bg: 'bg-red-500/10', goal: 'INTERRUPT' },
     { id: 'call', label: '04', title: 'Voz do Operador', sub: 'Voice VSL Script', icon: Phone, color: 'text-purple-400', bg: 'bg-purple-400/10', goal: 'RETENTION' },
-    { id: 'invisible-reveal', label: '05', title: 'Revelação', sub: 'O Sistema Invisível', icon: EyeOff, color: 'text-cyan-400', bg: 'bg-cyan-400/10', goal: 'AUTHORITY' },
-    { id: 'hacking-login', label: '06', title: 'Terminal Hack', sub: 'Invasão de Sistema', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
-    { id: 'tiktok', label: '07', title: 'TikTok Hacked', sub: 'Social Proof Flow', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
-    { id: 'offer', label: '08', title: 'Dashboard VSL', sub: 'Métricas de Venda', icon: ShoppingBag, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'DESIRE' },
-    { id: 'checkout', label: '09', title: 'Checkout Final', sub: 'Conversão em Dinheiro', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'CASHFLOW' },
+    { id: 'hacking-login', label: '05', title: 'Terminal Hack', sub: 'Invasão de Sistema', icon: ShieldAlert, color: 'text-orange-500', bg: 'bg-orange-500/10', goal: 'CURIOSITY' },
+    { id: 'tiktok', label: '06', title: 'TikTok Hacked', sub: 'Social Proof Flow', icon: Video, color: 'text-pink-500', bg: 'bg-pink-500/10', goal: 'VALIDATION' },
+    { id: 'offer', label: '07', title: 'Dashboard VSL', sub: 'Métricas de Venda', icon: ShoppingBag, color: 'text-[#00ff41]', bg: 'bg-[#00ff41]/10', goal: 'DESIRE' },
+    { id: 'checkout', label: '08', title: 'Checkout Final', sub: 'Conversão em Dinheiro', icon: ShoppingCart, color: 'text-yellow-500', bg: 'bg-yellow-500/10', goal: 'CASHFLOW' },
   ];
 
   const assetsLab = [
@@ -124,7 +122,6 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
           ))}
         </div>
 
-        {/* Footer info */}
         <div className="mt-10 p-5 rounded-3xl bg-zinc-900/20 border border-dashed border-[#00ff41]/20">
           <div className="flex justify-between text-[9px] font-bold uppercase mb-2">
               <span className="text-zinc-600">Status do Sistema:</span>
@@ -147,7 +144,6 @@ const TestNavigation: React.FC<TestNavigationProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* iOS indicator */}
       <div className="fixed bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/20 rounded-full pointer-events-none z-[110]" />
 
       <style>{`
