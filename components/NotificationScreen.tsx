@@ -116,7 +116,7 @@ const NotificationScreen: React.FC<NotificationScreenProps> = ({ onAccept }) => 
         </div>
         <div>
           <h4 className="font-bold text-white text-[15px]">Operador Invisível</h4>
-          <p className="text-white/90 text-[15px] leading-tight mt-0.5">vc não devia ter chegado até aqui</p>
+          <p className="text-white/90 text-[15px] leading-tight mt-0.5">Oi foca em mim agora preciso de apenas 3 min</p>
         </div>
       </div>
 

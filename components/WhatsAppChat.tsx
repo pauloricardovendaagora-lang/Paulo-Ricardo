@@ -52,8 +52,8 @@ const WhatsAppChat: React.FC<WhatsAppChatProps> = ({ onComplete, onExit }) => {
   };
 
   const fullCopy = [
-    { text: "Você não devia ter chegado até aqui.", delay: 1200 },
-    { text: "Isso já passou da curiosidade.", delay: 1000 },
+    { text: "Oi foca em mim agora preciso de apenas 3 min pra te abrir a caixa preta do ADS", delay: 1500 },
+    { text: "De verdade eu nem deveria estar falando sobre isso, estou correndo perigo, mas já que chegou até aqui vou te contar tudo", delay: 1800 },
     { text: "Se alguém perceber esse acesso, eu caio fora.", delay: 1500, read: true },
     { text: "Então presta atenção.", delay: 1000 },
     { text: "O sistema não foi feito pra você ganhar.", delay: 1000 },

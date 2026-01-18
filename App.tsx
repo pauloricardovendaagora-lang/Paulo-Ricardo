@@ -9,10 +9,8 @@ import CallingScreen from './components/CallingScreen';
 import HackingLogin from './components/HackingLogin';
 import TikTokHack from './components/TikTokHack';
 import OfferScreen from './components/OfferScreen';
-import TestNavigation from './components/TestNavigation';
-import CreativesLab from './components/CreativesLab';
 
-type FunnelStage = 'start' | 'pre-checkout' | 'notification' | 'whatsapp' | 'incoming-call' | 'call' | 'hacking-login' | 'tiktok' | 'offer' | 'debug' | 'creatives';
+type FunnelStage = 'start' | 'pre-checkout' | 'notification' | 'whatsapp' | 'incoming-call' | 'call' | 'hacking-login' | 'tiktok' | 'offer';
 
 const CHECKOUT_URL = 'https://pay.cakto.com.br/32ispaq_706676';
 
@@ -67,27 +65,15 @@ const App: React.FC = () => {
     <div className={`min-h-[100dvh] bg-black transition-opacity duration-300 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
       <div className="mx-auto max-w-[430px] min-h-[100dvh] relative bg-black shadow-2xl">
         
-        {/* Botão Secreto de Debug (5 cliques no topo da tela Start) */}
-        {stage === 'start' && (
-          <div 
-            className="absolute top-0 left-0 w-full h-20 z-[100] cursor-pointer"
-            onClick={(e) => {
-              if (e.detail === 5) navigateTo('debug');
-            }}
-          />
-        )}
-
-        {stage === 'debug' && <TestNavigation onNavigate={(s) => navigateTo(s as FunnelStage)} />}
         {stage === 'start' && <StartScreen onStart={() => navigateTo('pre-checkout')} />}
         {stage === 'pre-checkout' && <PreCheckout onContinue={() => navigateTo('notification')} />}
         {stage === 'notification' && <NotificationScreen onAccept={() => navigateTo('whatsapp')} />}
-        {stage === 'whatsapp' && <WhatsAppChat onComplete={() => navigateTo('incoming-call')} onExit={() => setStage('debug')} />}
-        {stage === 'incoming-call' && <IncomingCallScreen onAccept={() => navigateTo('call')} onDecline={() => setStage('debug')} />}
+        {stage === 'whatsapp' && <WhatsAppChat onComplete={() => navigateTo('incoming-call')} onExit={() => navigateTo('start')} />}
+        {stage === 'incoming-call' && <IncomingCallScreen onAccept={() => navigateTo('call')} onDecline={() => navigateTo('start')} />}
         {stage === 'call' && <CallingScreen onComplete={() => navigateTo('hacking-login')} />}
         {stage === 'hacking-login' && <HackingLogin onComplete={() => navigateTo('tiktok')} />}
         {stage === 'tiktok' && <TikTokHack onComplete={() => navigateTo('offer')} />}
         {stage === 'offer' && <OfferScreen onComplete={handleFinalConversion} />}
-        {stage === 'creatives' && <CreativesLab onBack={() => navigateTo('debug')} />}
       </div>
     </div>
   );
