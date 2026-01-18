@@ -69,7 +69,7 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
       </div>
 
       {/* Área de Conteúdo Rolável */}
-      <div className="flex-1 overflow-y-auto z-10 p-4 space-y-6 custom-scrollbar pb-32">
+      <div className="flex-1 overflow-y-auto z-10 p-4 space-y-6 custom-scrollbar pb-40">
         
         {/* Metric Grid 2x2 */}
         <div className="grid grid-cols-2 gap-4">
@@ -207,18 +207,20 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
       </div>
 
       {/* Rodapé CTA */}
-      <div className="shrink-0 p-6 pb-12 bg-black/90 backdrop-blur-3xl border-t border-white/5 z-50">
+      <div className="shrink-0 p-6 pb-12 bg-black/95 backdrop-blur-3xl border-t border-white/5 z-50">
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col items-center justify-center px-2 py-2">
-            <span className="text-red-600 line-through text-4xl font-black decoration-[4px] drop-shadow-[0_0_10px_rgba(220,38,38,0.3)] italic">R$ 97</span>
+          <div className="flex flex-col items-center justify-center -space-y-1">
+            <span className="text-zinc-600 line-through text-2xl font-black decoration-[2px] opacity-60 italic">R$ 197</span>
+            <span className="text-white text-5xl font-black tracking-tighter drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] italic">R$ 29,90</span>
           </div>
 
           <button 
             onClick={handleFinalClick}
-            className="w-full bg-[#22c55e] text-black py-6 rounded-[2rem] font-black text-xl flex items-center justify-center gap-3 shadow-[0_10px_40px_rgba(34,197,94,0.4)] active:scale-95 transition-all group"
+            className="w-full bg-[#22c55e] text-black py-6 rounded-[2rem] font-black text-xl flex items-center justify-center gap-3 shadow-[0_10px_40px_rgba(34,197,94,0.4)] active:scale-95 transition-all group overflow-hidden relative"
           >
-            ACESSAR O SISTEMA AGORA
-            <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+            <div className="absolute inset-0 bg-white/20 -translate-x-full animate-shimmer-btn pointer-events-none" />
+            <span className="relative z-10">ACESSAR O SISTEMA AGORA</span>
+            <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform relative z-10" />
           </button>
 
           <div className="flex items-center justify-center gap-4 opacity-30">
@@ -240,6 +242,14 @@ const OfferScreen: React.FC<OfferScreenProps> = ({ onComplete }) => {
         }
         .animate-graph-line {
           animation: graph-line 3s ease-out infinite;
+        }
+
+        @keyframes shimmer-btn {
+          0% { transform: translateX(-100%) skewX(-15deg); }
+          30%, 100% { transform: translateX(200%) skewX(-15deg); }
+        }
+        .animate-shimmer-btn {
+          animation: shimmer-btn 3s infinite;
         }
       `}</style>
     </div>
